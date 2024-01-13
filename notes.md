@@ -1,1 +1,1 @@
-# Things I've learned this semester in CS260
+# CS260 course notes
