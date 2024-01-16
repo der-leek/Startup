@@ -3,13 +3,13 @@
 
 ## Specification Deliverable
 
-# Elevator Pitch
+## Elevator Pitch
 
-# Design
+## Design
 
-# Key Features
+## Key Features
 
-# Technologies
+## Technologies
 - **HTML** -
 - **CSS** -
 - **JavaScript** -
