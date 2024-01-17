@@ -4,6 +4,10 @@
 ## Specification Deliverable
 
 ## Elevator Pitch
+- WHAT ARE THE BENEFITS
+- transcription using the best in AI
+- free to use
+- simple interface
 
 ## Design
 
