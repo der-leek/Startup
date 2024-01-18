@@ -20,7 +20,10 @@ I will employ these required technologies as follows
 - **HTML** - Provides basic framework for login and web app pages.
 - **CSS** - Adds styling, animation, and fluid UI.
 - **JavaScript** - Enables login, calls Whisper transcription model (written in c++ for speed), provides button interactivity.
-- **Service** - 
+- **Service** - Backend service with endpoints for:
+  - Authentication
+  - Receiving audio input
+  - Sending text output
 - **DB/Login** - Stores users and credentials in database. 
 - **WebSocket** - Provides real-time transcription generation capability
 - **React** - Application will be ported to use the React web framework.
