@@ -10,3 +10,8 @@
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp)
 ### whisper.cpp usage:
 ![](whisper_cpp_usage.jpg)
+
+## 1/23/24
+- learned how to create an AWS EC2 instance
+  - public IP http://3.228.72.115
+  - ssh -i /Users/derekashby/Documents/starlord-banana-landscaping.pem ubuntu@54.85.249.244
