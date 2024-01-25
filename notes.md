@@ -15,3 +15,7 @@
 - learned how to create an AWS EC2 instance
   - public IP http://3.228.72.115
   - ssh -i /Users/derekashby/Documents/starlord-banana-landscaping.pem ubuntu@54.85.249.244
+
+## 1/24/24
+- created and set up AWS Route 53 DNS server
+  - learned how to connect an IP address to a DNS domain through Route 53
