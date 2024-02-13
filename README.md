@@ -28,3 +28,15 @@ I will employ these required technologies as follows
 - **DB/Login** - Stores users and credentials in database. 
 - **WebSocket** - Provides real-time transcription generation capability
 - **React** - Application will be ported to use the React web framework.
+
+## HTML Deliverable
+- HTML pages - 4 HTML pages: 
+  1. a welcome/login screen
+  2. a page to upload audio files
+  3. a page to display transcribed audio
+  4. an information page
+- Links - the header of every page has links to the login screen and the about page. The transcription page has an additional link to the upload files page
+- Text - the welcome after login (displays the user's name) and the generated transcription are represented by a textual placeholder
+- Images - an abstract waveform image occupies the footer of each page
+- DB/Login - index.html includes fields for the user's name and password. Upon login, their username will be displayed in a welcome message
+- WebSocket - the placeholder text in transcribe.html represents the realtime generated transcription
