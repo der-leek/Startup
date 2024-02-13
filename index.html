@@ -27,14 +27,15 @@
 
     <main>
       <h1>welcome to whisper</h1>
-      <form >
-        <input type="text" id="username" placeholder="username" />
-      </form>
-
       <form method="get" action=>
+        <input type="text" id="username" placeholder="username"/>
         <input type="text" id="password" placeholder="password"/>
-    </form>
-    <button type="submit">sign in</button>
+      </form>
+      
+      <button type="submit">sign in</button>
+
+      <!-- rendering of login confirmation (credentials match database information) -->
+      <p>success: welcome &lt;user's name&gt;</p>
     </main>
 
     <footer>
