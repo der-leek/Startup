@@ -529,3 +529,42 @@ That's everything we need to do. However, let's make one more addition. It would
   }
 }
 ```
+
+#### Core Animation Properties
+| Property                    | Description                                                                                        |
+| --------------------------- | -------------------------------------------------------------------------------------------------- |
+| `animation-name`            | Gives the animation a name to reference it w                                                       |
+| `animation-duration`        | How long the animation cycle lasts (e.g., 3s for 3 seconds)                                        |
+| `animation-timing-function` | Controls the speed curve (e.g., ease-out, linear, cubic-bezier() for custom curves)                |
+| `animation-delay`           | A delay before the animation begins (e.g., 2s)                                                     |
+| `animation-iteration-count` | How many times the animation repeats (e.g., 3, infinite)                                           |
+| `animation-direction`       | Whether the animation alternates directions (e.g., reverse, alternate)                             |
+| `animation-fill-mode`       | What styles are applied outside of the animation's duration (e.g., forwards to keep the end state) |
+ 
+#### The `@keyframes` Rule
+You define the actual change in styles at different points in the animation using `@keyframes`:
+
+``` CSS
+@keyframes slideIn {
+    0% { opacity: 0; transform: translateX(-100px); }
+    100% { opacity: 1; transform: translateX(0); } 
+} 
+``` 
+
+#### Example: Applying to an Element
+
+``` CSS
+.my-element {
+  animation-name: slideIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+}
+```
+
+#### Combine all the values into one property:
+
+```CSS
+.my-element {
+  animation: slideIn 1s ease-out; 
+}
+```
