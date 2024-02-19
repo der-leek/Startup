@@ -6,27 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>whisper.txt</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
     <header>
-      <h1><a href="index.html">whisper.txt</a></h1>
-      <nav>
-        <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
-        <table>
-          <tr>
-            <td><a href="index.html">login</a></td>
-            <td><a href="about.html">about</a></td>
-          </tr>
-        </table>
-      </nav>
+      <div>
+        <nav>
+          <table>
+            <tr>
+              <td><h2><a href="index.html">whisper.txt</a></h2></td>
+              <td><a href="">join whisper</a></td>
+              <td><a href="index.html">login</a></td>
+              <td><a href="about.html">about</a></td>
+            </tr>
+          </table>
+        </nav>
+        
+        <p>
+          Derek Ashby
+          <a href="https://github.com/der-leek/Startup">Github</a>
+        </p>
 
-      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
-      <hr />
+      </div>
     </header>
 
     <main>
       <h1>welcome to whisper</h1>
+
       <form method="post" action="">
         <input type="text" id="username" placeholder="username" required/>
         </br>
@@ -36,17 +43,12 @@
       
       <button type="submit">sign in</button>
 
-      <!-- create page for creating an account -->
-
       <!-- rendering of login confirmation (credentials match database information) -->
       <p>success: welcome &lt;user's name&gt;</p>
     </main>
 
     <footer>
-      <hr />
-      <img alt="abstract waveforms" src="whisper_waveforms.jpeg" height="305">
-      <span class="text-reset">Derek Ashby</span>
-      <a href="https://github.com/der-leek/Startup">GitHub</a>
+      <img alt="abstract waveforms" src="whisper_waveforms.jpeg" height="100" width="200%">
     </footer>
   </body>
 </html>
