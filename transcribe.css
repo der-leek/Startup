@@ -20,11 +20,10 @@ header div {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: lighter;
     padding: 0 1em;
 }
 
-header td {
+header td, a {
     padding: 0 1em;
 }
 
