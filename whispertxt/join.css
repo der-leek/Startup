@@ -59,7 +59,7 @@ main {
 }
 
 form {
-    padding: 1.5em 1.5em .5em 1.5em;
+    padding: 1.5em 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -73,7 +73,7 @@ form {
     border: none;      
     background: rgb(70, 70, 70); 
     color: white;
-    padding: .5em 1.5em;   
+    padding: .5em 1.15em;   
 }
 
 #email {
