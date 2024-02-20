@@ -32,16 +32,16 @@
     </header>
 
     <main>
-      <h1>welcome to whisper</h1>
+      <h1 id="welcome">welcome to whisper</h1>
 
       <form method="post" action="">
         <input type="text" id="username" placeholder="username" required/>
-        </br>
         <input type="password" id="password" placeholder="password" required/>
-        <!-- add option to show/hide password -->
+        <!-- add option to show/hide password (maybe an filled/hollow circle)-->
       </form>
       
-      <button type="submit">sign in</button>
+      <button type="submit" id="submit" style="display: none;">sign in</button>
+      <label for="submit">log in</label>
 
       <!-- rendering of login confirmation (credentials match database information) -->
       <p>success: welcome &lt;user's name&gt;</p>
