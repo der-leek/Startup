@@ -73,7 +73,7 @@ form {
 label {
     background-color: rgb(70, 70, 70); 
     border-radius: 5px;
-    padding: .65em 1.5em;
+    padding: .65em 5em;
     color: rgb(225, 225, 225);
     font-weight: bold;
 }
