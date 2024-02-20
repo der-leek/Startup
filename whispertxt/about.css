@@ -12,8 +12,44 @@ body {
   animation: intro 1s ease-in;
 }
 
+.mobile {
+    display: none;
+}
+
 header {
     flex: 0 .5em;
+}
+
+#mobile_menu {
+    display: none;
+    text-align: left;
+    padding: 0;
+}
+
+ul {
+    padding: 0;
+}
+
+#mobile_menu_trigger:hover #mobile_menu {
+    display: block;
+    animation: menu_display 1s ease-in;
+}
+
+.menu_item {
+    list-style: none;
+}
+
+.custom_button {
+    background-color: rgb(70, 70, 70); 
+    border-radius: 5px;
+    padding: .25em 1em;
+    margin: 0;
+    color: rgb(225, 225, 225);
+    font-weight: bold;
+}
+
+.custom_button:hover {
+    color: white
 }
 
 header div {
@@ -23,7 +59,7 @@ header div {
     padding: 0 1em;
 }
 
-header td, a {
+header td, span {
     padding: 0 1em;
 }
 
@@ -36,7 +72,7 @@ main {
 }
 
 main p {
-    width: 43%;
+    width: 50%;
     text-align: center;
     line-height: 1.5em;
 
@@ -81,5 +117,23 @@ a:hover {
 @keyframes slide_down {
     0% {
         transform: translateY(-1em);
+    }
+}
+
+@keyframes menu_display {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+@media (orientation: portrait) {
+    header nav {
+        display: none;
+    }
+    .mobile {
+        display: block;
     }
 }

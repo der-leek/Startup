@@ -23,6 +23,18 @@
           </table>
         </nav>
         
+        <button id="mobile_menu_button" style="display: none"></button>
+        <label for="mobile_menu_button" id="mobile_menu_trigger" class="mobile custom_button">
+          whisper.txt
+          <menu id="mobile_menu">
+            <ul>
+              <li class="menu_item" style="display: list-item none"><a href="join.html">join whisper</a></li>
+              <li class="menu_item"><a href="index.html">login</a></li>
+              <li class="menu_item"><a href="about.html">about</a></li>
+            </ul>
+          </menu>
+        </label>
+        
         <p>
           <span>Derek Ashby</span>
           <a href="https://github.com/der-leek/Startup">Github</a>
@@ -39,7 +51,7 @@
           <input type="password" id="confirmation" placeholder="re-enter your password">
       </form>
       
-      <p class="custom_button">join whisper</p>
+      <p class="custom_button" id="submit_credentials">join whisper</p>
     </main>
 
     <footer>

@@ -12,6 +12,20 @@ body {
   animation: intro 1s ease-in;
 }
 
+.mobile {
+    display: none;
+}
+
+#mobile_menu {
+    display: none;
+    text-align: left;
+    padding: 0;
+}
+
+.menu_item {
+    list-style: none;
+}
+
 header {
     flex: 0 .5em;
 }
@@ -23,7 +37,7 @@ header div {
     padding: 0 1em;
 }
 
-header td, a {
+header td, span {
     padding: 0 1em;
 }
 
@@ -37,7 +51,7 @@ main {
 }
 
 #whisper_output {
-    padding: 12%;
+    padding: 10%;
     background: rgb(80, 80, 80);
     border-radius: 8px;
 }
@@ -48,16 +62,25 @@ main {
     animation: cursor_blink 1.5s steps(2) infinite;
 }
 
+#output_placeholder {
+    display: block;
+    text-align: center;
+}
+
 .custom_button {
     background-color: rgb(70, 70, 70); 
     border-radius: 5px;
-    padding: .65em 1.5em;
+    padding: .65em 1em;
     color: rgb(225, 225, 225);
     font-weight: bold;
 }
 
 .custom_button:hover {
     color: white
+}
+
+#save_whisper:hover {
+    cursor: pointer;
 }
 
 footer {
@@ -98,5 +121,30 @@ a:hover {
 @keyframes cursor_blink {
     0% {
         color: transparent;
+    }
+}
+
+@keyframes menu_display {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+@media (orientation: portrait) {
+    header nav {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+    ul {
+        padding: 0;
+    }
+    #mobile_menu_trigger:hover #mobile_menu {
+        display: block;
+        animation: menu_display 1s ease-in;
     }
 }

@@ -23,8 +23,20 @@
           </table>
         </nav>
         
+        <button id="mobile_menu_button" style="display: none"></button>
+        <label for="mobile_menu_button" id="mobile_menu_trigger" class="mobile custom_button">
+          whisper.txt
+          <menu id="mobile_menu">
+            <ul>
+              <li class="menu_item" style="display: list-item none"><a href="join.html">join whisper</a></li>
+              <li class="menu_item"><a href="index.html">login</a></li>
+              <li class="menu_item"><a href="about.html">about</a></li>
+            </ul>
+          </menu>
+        </label>
+        
         <p>
-          Derek Ashby
+          <span>Derek Ashby</span>
           <a href="https://github.com/der-leek/Startup">Github</a>
         </p>
 
@@ -34,8 +46,8 @@
     <main>
       <div for="file_input">
         <!-- Container to hold drag/drop area, browse button -->
-        <!-- MAKE CLICKABLE -->
-        <label for="file_input">drop or click here to upload your audio file</label>
+          <!-- MAKE CLICKABLE -->
+        <label for="file_input" id="drop_button" class="custom_button">drop or click here to upload your audio file</label>
         <input type="file" id="file_input" accept=".mp3, .mp4, .mpeg, .mpga, .m4a, .wav, .webm" style="display: none">
       </div>
     </main>
