@@ -40,3 +40,13 @@ I will employ these required technologies as follows
 - Images - an abstract waveform image occupies the footer of each page
 - DB/Login - index.html includes fields for the user's name and password. Upon login, their username will be displayed in a welcome message
 - WebSocket - the placeholder text in transcribe.html represents the realtime generated transcription
+
+## CSS Deliverable
+For this deliverable, I properly styled whisper.txt into nearly its final appearance. I will continue to modify the styling as necessary as I add functionality.
+
+- Header, footer, and main content body
+- Navigation elements - I dropped the underlines, changed the color and font weight, and modified hover behavior for anchor elements
+- Responsive to window resizing - My app looks great on all window sizes and devices
+- Application elements - All elements are clearly visible and adhere to a cohesive theme
+- Application text content - I used Google's Noto Sans Mono font across the entire project
+- Application images - I employed my application image along the page's footer
