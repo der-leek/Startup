@@ -12,12 +12,12 @@ body {
   animation: intro 1s ease-in;
 }
 
-.mobile {
-    display: none;
-}
-
 header {
     flex: 0 .5em;
+}
+
+.mobile {
+    display: none;
 }
 
 #mobile_menu {
@@ -38,15 +38,7 @@ header div {
 }
 
 header td, p {
-    margin: 0;
-    padding: 0 1em 0 0;
-}
-
-#source {
-    flex-direction: row;
-    justify-content: flex-end;
-    margin: 0;
-    padding: 0;
+    padding: 0 1em;
 }
 
 main {
@@ -162,6 +154,10 @@ a:hover {
 }
 
 @media (orientation: portrait) {
+    header div {
+        flex-direction: column;
+        justify-content: center;
+    }
     header nav {
         display: none;
     }
@@ -170,6 +166,10 @@ a:hover {
     }
     ul {
         padding: 0;
+    }
+    li {
+        padding: .25em 0;
+        text-align: center;
     }
     #mobile_menu_trigger:hover #mobile_menu {
         display: block;

@@ -12,27 +12,18 @@ body {
   animation: intro 1s ease-in;
 }
 
-.mobile {
-    display: none;
-}
-
 header {
     flex: 0 .5em;
+}
+
+.mobile {
+    display: none;
 }
 
 #mobile_menu {
     display: none;
     text-align: left;
     padding: 0;
-}
-
-ul {
-    padding: 0;
-}
-
-#mobile_menu_trigger:hover #mobile_menu {
-    display: block;
-    animation: menu_display 1s ease-in;
 }
 
 .menu_item {
@@ -42,7 +33,7 @@ ul {
 .custom_button {
     background-color: rgb(70, 70, 70); 
     border-radius: 5px;
-    padding: .25em 1em;
+    padding: .65em 1em;
     margin: 0;
     color: rgb(225, 225, 225);
     font-weight: bold;
@@ -69,10 +60,11 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 2.5em 0;
 }
 
 main p {
-    width: 50%;
+    width: 60%;
     text-align: center;
     line-height: 1.5em;
 
@@ -130,10 +122,25 @@ a:hover {
 }
 
 @media (orientation: portrait) {
+    header div {
+        flex-direction: column;
+        justify-content: center;
+    }
     header nav {
         display: none;
     }
     .mobile {
         display: block;
+    }
+    ul {
+        padding: 0;
+    }
+    li {
+        padding: .25em 0;
+        text-align: center;
+    }
+    #mobile_menu_trigger:hover #mobile_menu {
+        display: block;
+        animation: menu_display 1s ease-in;
     }
 }

@@ -12,6 +12,10 @@ body {
   animation: intro 1s ease-in;
 }
 
+header {
+    flex: 0 .5em;
+}
+
 .mobile {
     display: none;
 }
@@ -24,10 +28,6 @@ body {
 
 .menu_item {
     list-style: none;
-}
-
-header {
-    flex: 0 .5em;
 }
 
 header div {
@@ -141,6 +141,10 @@ a:hover {
 }
 
 @media (orientation: portrait) {
+    header div {
+        flex-direction: column;
+        justify-content: center;
+    }
     header nav {
         display: none;
     }
@@ -149,6 +153,10 @@ a:hover {
     }
     ul {
         padding: 0;
+    }
+    li {
+        padding: .25em 0;
+        text-align: center;
     }
     #mobile_menu_trigger:hover #mobile_menu {
         display: block;

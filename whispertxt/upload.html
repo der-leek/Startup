@@ -12,43 +12,50 @@
     <!-- Use header, main, and footer elements to give semantic structure -->
     <header>
       <div>
+        <div>
           <nav>
             <table>
               <tr>
                 <td><h2><a href="index.html">whisper.txt</a></h2></td>
-                <td><a href="join.html">join whisper</a></td>
                 <td><a href="index.html">login</a></td>
                 <td><a href="about.html">about</a></td>
+                <td><a href="join.html">join whisper</a></td>
               </tr>
             </table>
           </nav>
-
-        <button id="mobile_menu_button" style="display: none"></button>
-        <label for="mobile_menu_button" id="mobile_menu_trigger" class="mobile custom_button">
-          whisper.txt
-          <menu id="mobile_menu">
-            <ul>
-              <li class="menu_item" style="display: list-item none"><a href="join.html">join whisper</a></li>
-              <li class="menu_item"><a href="index.html">login</a></li>
-              <li class="menu_item"><a href="about.html">about</a></li>
-            </ul>
-          </menu>
-        </label>
+        </div>
+        
+        <div>
+          <button id="mobile_menu_button" style="display: none"></button>
+          <label for="mobile_menu_button" id="mobile_menu_trigger" class="mobile custom_button">
+            whisper.txt
+            <menu id="mobile_menu">
+              <ul>
+                <li class="menu_item" style="display: list-item none"><a href="join.html">join whisper</a></li>
+                <li class="menu_item"><a href="index.html">login</a></li>
+                <li class="menu_item"><a href="about.html">about</a></li>
+              </ul>
+            </menu>
+          </label>
+        </div>
 
         <div id="source">
-          <p>Derek <br> Ashby</p>
+          <p>Derek Ashby</p>
           <a href="https://github.com/der-leek/Startup">Github</a>
         </div>
       </div>
     </header>
 
     <main>
-      <div for="file_input">
+      <div>
         <!-- Container to hold drag/drop area, browse button -->
           <!-- MAKE CLICKABLE -->
         <label for="file_input" id="drop_button" class="custom_button">drop or click here to upload your audio file</label>
         <input type="file" id="file_input" accept=".mp3, .mp4, .mpeg, .mpga, .m4a, .wav, .webm" style="display: none">
       </div>
+      <p class="custom_button">
+        <a href="transcribe.html">next</a>
+      </p>
     </main>
 
     <footer>
