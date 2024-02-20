@@ -80,6 +80,6 @@ a:hover {
 
 @keyframes slide_down {
     0% {
-        transform: translateY(-5em);
+        transform: translateY(-1em);
     }
 }
