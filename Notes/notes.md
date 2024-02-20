@@ -747,3 +747,624 @@ Here is the [CodePen](https://codepen.io/leesjensen/pen/NWzLGmJ) for this exampl
 #### Grid and Flexbox
 
 The final two responsive technologies that we want to discuss are Grid and Flexbox. These are both CSS display modes that automatically respond to screen sizes to position and resize their child elements. We will discuss each of these in detail in the following instruction.
+
+## 2/20/24
+### JavaScript console
+
+📖 **Deeper dive reading**: [MDN JavaScript Console](https://developer.mozilla.org/en-US/docs/Web/API/console)
+
+The JavaScript console object provides interaction with the JavaScript runtime's debugger console. This usage of console should not be confused with your operating system's console (AKA terminal or command line). The console object provides functionality for outputting the value of text and objects, running timers, and counting iterations. These are useful debugging tools when you can actually execute your code in an interactive debugger (such as VS Code).
+
+#### Log
+
+The basic usage of the console object is to output a log message.
+
+```js
+console.log('hello');
+// OUTPUT: hello
+```
+
+You can create formatted messages in the log parameter.
+
+```js
+console.log('hello %s', 'world');
+// OUTPUT: hello world
+```
+
+You can even specify CSS declarations in order to style the log output.
+
+```js
+console.log('%c JavaScript Demo', 'font-size:1.5em; color:green;');
+// OUTPUT: JavaScript Demo //in large green text
+```
+
+#### Timers
+
+If you are trying to see how long a piece of code is running you can wrap it with `time` and `timeEnd` calls and it will output the duration between the `time` and `timeEnd` calls.
+
+```js
+console.time('demo time');
+// ... some code that takes a long time.
+console.timeEnd('demo time');
+// OUTPUT: demo time: 9762.74 ms
+```
+
+#### Count
+
+To see how many times a block of code is called you can use the `count` function.
+
+```js
+console.count('a');
+// OUTPUT: a: 1
+console.count('a');
+// OUTPUT: a: 2
+console.count('b');
+// OUTPUT: b: 1
+```
+
+### Adding JavaScript to HTML
+
+You can insert JavaScript into HTML either by directly including it in the HTML within the content of a `<script>` element, or by using the `src` attribute of the script element to reference an external JavaScript file.
+
+**index.js**
+
+```js
+function sayHello() {
+  console.log('hello');
+}
+```
+
+**index.html**
+
+```html
+<head>
+  <script src="javascript.js"></script>
+</head>
+<body>
+  <button onclick="sayHello()">Say Hello</button>
+  <button onclick="sayGoodbye()">Say Goodbye</button>
+  <script>
+    function sayGoodbye() {
+      alert('Goodbye');
+    }
+  </script>
+</body>
+```
+
+Notice that we call the `sayHello` and `sayGoodbye` JavaScript functions from the HTML in the `onclick` attribute of the button element. Special attributes like `onclick` automatically create event listeners for different DOM events that call the code contained in the attribute's value. The code specified by the attribute value can be a simple call to a function or any JavaScript code.
+
+```html
+<button onclick="let i=1;i++;console.log(i)">press me</button>
+<!-- OUTPUT: 2 -->
+```
+
+### JavaScript type and construct
+
+📖 **Deeper dive reading**: [MDN Data types and structures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures)
+
+####Declaring variables
+
+Variables are declared using either the `let` or `const` keyword. `let` allows you to change the value of the variable while `const` will cause an error if you attempt to change it.
+
+```js
+let x = 1;
+
+const y = 2;
+```
+
+⚠ Originally JavaScript used the keyword `var` to define variables. This has been deprecated because they cause hard-to-detect errors in code related to the scope of the variable. You should avoid `var` and always declare your variables either with `let` or `const`.
+
+#### Type
+
+JavaScript defines several primitive types.
+
+| Type        | Meaning                                                    |
+| ----------- | ---------------------------------------------------------- |
+| `Null`      | The type of a variable that has not been assigned a value. |
+| `Undefined` | The type of a variable that has not been defined.          |
+| `Boolean`   | true or false.                                             |
+| `Number`    | A 64-bit signed number.                                    |
+| `BigInt`    | A number of arbitrary magnitude.                           |
+| `String`    | A textual sequence of characters.                          |
+| `Symbol`    | A unique value.                                            |
+
+Of these types Boolean, Number, and String are the types commonly thought of when creating variables. However, variables may commonly refer to the Null or Undefined primitive. Because JavaScript does not enforce the declaration of a variable before you use it, it is entirely possible for a variable to have the type of Undefined.
+
+In addition to the above primitives, JavaScript defines several object types. Some of the more commonly used objects include the following:
+
+| Type       | Use                                                                                    | Example                  |
+| ---------- | -------------------------------------------------------------------------------------- | ------------------------ |
+| `Object`   | A collection of properties represented by name-value pairs. Values can be of any type. | `{a:3, b:'fish'}`        |
+| `Function` | An object that has the ability to be called.                                           | `function a() {}`        |
+| `Date`     | Calendar dates and times.                                                              | `new Date('1995-12-17')` |
+| `Array`    | An ordered sequence of any type.                                                       | `[3, 'fish']`            |
+| `Map`      | A collection of key-value pairs that support efficient lookups.                        | `new Map()`              |
+| `JSON`     | A lightweight data-interchange format used to share information across programs.       | `{"a":3, "b":"fish"}`    |
+
+#### Common operators
+
+When dealing with a number variable, JavaScript supports standard mathematical operators like `+` (add), `-` (subtract), `*` (multiply), `/` (divide), and `===` (equality). For string variables, JavaScript supports `+` (concatenation) and `===` (equality).
+
+#### Type conversions
+
+JavaScript is a weakly typed language. That means that a variable always has a type, but the variable can change type when it is assigned a new value, or that types can be automatically converted based upon the context that they are used in. Sometimes the results of automatic conversions can be unexpected from programmers who are used to strongly typed languages. Consider the following examples.
+
+```js
+2 + '3';
+// OUTPUT: '23'
+2 * '3';
+// OUTPUT: 6
+[2] + [3];
+// OUTPUT: '23'
+true + null;
+// OUTPUT: 1
+true + undefined;
+// OUTPUT: NaN
+```
+
+Getting unexpected results is especially common when dealing with the [equality](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness) operator.
+
+```js
+1 == '1';
+// OUTPUT: true
+null == undefined;
+// OUTPUT: true
+'' == false;
+// OUTPUT: true
+```
+
+⚠ The unexpected results happen in JavaScript because it uses [complex rules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#strict_equality_using) for defining equality that depend upon the conversion of a type to a boolean value. You will sometimes hear this referred to as [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) and [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) evaluations. To remove this confusion, JavaScript introduced the strict equality (===) and inequality (!==) operators. The strict operators skip the type conversion when computing equality. This results in the following.
+
+```js
+1 === '1';
+// OUTPUT: false
+null === undefined;
+// OUTPUT: false
+'' === false;
+// OUTPUT: false
+```
+
+Because strict equality is considered more intuitive, it is almost always preferred and should be used in your code.
+
+Here is a fun example of JavaScript's type conversion. Execute the following in the browser's debugger console.
+
+```js
+('b' + 'a' + +'a' + 'a').toLowerCase();
+```
+
+#### Conditionals
+
+JavaScript supports many common programming language conditional constructs. This includes `if`, `else`, and `if else`. Here are some examples.
+
+```js
+if (a === 1) {
+  //...
+} else if (b === 2) {
+  //...
+} else {
+  //...
+}
+```
+
+You can also use the ternary operator. This provides a compact `if else` representation.
+
+```js
+a === 1 ? console.log(1) : console.log('not 1');
+```
+
+You can use boolean operations in the expression to create complex predicates. Common boolean operators include `&&` (and), `||` (or), and `!` (not).
+
+```js
+if (true && (!false || true)) {
+  //...
+}
+```
+
+#### Loops
+
+JavaScript supports many common programming language looping constructs. This includes `for`, `for in`, `for of`, `while`, `do while`, and `switch`. Here are some examples.
+
+##### for
+
+Note the introduction of the common post increment operation (`i++`) for adding one to a number.
+
+```js
+for (let i = 0; i < 2; i++) {
+  console.log(i);
+}
+// OUTPUT: 0 1
+```
+
+##### do while
+
+```js
+let i = 0;
+do {
+  console.log(i);
+  i++;
+} while (i < 2);
+// OUTPUT: 0 1
+```
+
+##### while
+
+```js
+let i = 0;
+while (i < 2) {
+  console.log(i);
+  i++;
+}
+// OUTPUT: 0 1
+```
+
+##### for in
+
+The `for in` statement iterates over an object's property names.
+
+```js
+const obj = { a: 1, b: 'fish' };
+for (const name in obj) {
+  console.log(name);
+}
+// OUTPUT: a
+// OUTPUT: b
+```
+
+For arrays the object's name is the array index.
+
+```js
+const arr = ['a', 'b'];
+for (const name in arr) {
+  console.log(name);
+}
+// OUTPUT: 0
+// OUTPUT: 1
+```
+
+##### for of
+
+The `for of` statement iterates over an iterable's (Array, Map, Set, ...) property values.
+
+```js
+const arr = ['a', 'b'];
+for (const val of arr) {
+  console.log(val);
+}
+// OUTPUT: 'a'
+// OUTPUT: 'b'
+```
+
+##### Break and continue
+
+All of the looping constructs demonstrated above allow for either a `break` or `continue` statement to abort or advance the loop.
+
+```js
+let i = 0;
+while (true) {
+  console.log(i);
+  if (i === 0) {
+    i++;
+    continue;
+  } else {
+    break;
+  }
+}
+// OUTPUT: 0 1
+```
+
+### JavaScript string
+
+📖 **Deeper dive reading**: [MDN String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+Strings are a primitive type in JavaScript. A string variable is specified by surrounding a sequence of characters with single quotes (`'`), double quotes (`"`), or backticks (`` ` ``). The meaning of single or double quotes are equivalent, but the backtick defines a string literal that may contain JavaScript that is evaluated in place and concatenated into the string. A string literal replacement specifier is declared with a dollar sign followed by a curly brace pair. Anything inside the curly braces is evaluated as JavaScript. You can also use backticks to create multiline strings without having to explicitly escape the newline characters using `\n`.
+
+```js
+'quoted text'; // " also works
+
+const l = 'literal';
+console.log(`string ${l + (1 + 1)} text`);
+// OUTPUT: string literal2 text
+```
+
+#### Unicode support
+
+JavaScript supports Unicode by defining a string as a 16-bit unsigned integer that represents UTF-16 strings. Unicode support allows JavaScript to represent most languages spoken on the planet. This includes those that are read from right to left.
+
+> حجر
+>
+> أقول لهذا الحجر: أنا أنت. فيقول: لستَ مرناً الى هذا الحدّ. أقول: قلبي مثلك؟ فيقول:
+
+However, there are several important steps you must take in order to make your web application fully internationalized. This includes handling of currency, time, dates, iconography, units of measure, keyboard layouts, and respecting local customs. Read this [article on the W3C website](https://www.w3.org/standards/webdesign/i18n) to learn more about internationalization.
+
+#### String functions
+
+The string object has several interesting functions associated with it. Here are some of the commonly used ones.
+
+| Function      | Meaning                                                      |
+| ------------- | ------------------------------------------------------------ |
+| length        | The number of characters in the string                       |
+| indexOf()     | The starting index of a given substring                      |
+| split()       | Split the string into an array on the given delimiter string |
+| startsWith()  | True if the string has a given prefix                        |
+| endsWith()    | True if the string has a given suffix                        |
+| toLowerCase() | Converts all characters to lowercase                         |
+
+```js
+const s = 'Example:조선글';
+
+console.log(s.length);
+// OUTPUT: 11
+console.log(s.indexOf('조선글'));
+// OUTPUT: 8
+console.log(s.split(':'));
+// OUTPUT: ['Example', '조선글']
+console.log(s.startsWith('Ex'));
+// OUTPUT: true
+console.log(s.endsWith('조선글'));
+// OUTPUT: true
+console.log(s.toLowerCase());
+// OUTPUT: example:조선글
+```
+
+### Functions
+
+📖 **Deeper dive reading**: [MDN Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions)
+
+In JavaScript functions are first class objects. That means that they can be assigned a name, passed as a parameter, returned as a result, and referenced from an object or array just like any other variable.
+
+The basic syntax of a function begins with the `function` keyword followed by zero or more parameters and a body that may contain zero or more return statements. The return statement may return a single value. Note that there are no type declarations, as the type is always inferred by the assignment of the value to the parameter.
+
+```js
+function hello(who) {
+  return 'hello ' + who;
+}
+
+console.log(hello('world'));
+// OUTPUT: hello world
+```
+
+A function without a return value usually exists to produce some side effect like modifying a parameter or interacting with an external program. In the following example the side effect of the function is to output text to the debugger console.
+
+```js
+function hello(who) {
+  who.count++;
+  console.log('hello ' + who.name);
+}
+
+hello({ name: 'world', count: 0 });
+// OUTPUT: hello world
+```
+
+#### Function parameters
+
+When a function is called, the caller may choose what parameters to provide. If a parameter is not provided then the value of the parameter is `undefined` when the function executes.
+
+In addition to explicitly passing the value of a parameter to a function, the function can define a default value. This is done by assigning a value to the parameter in the function declaration.
+
+```js
+function labeler(value, title = 'title') {
+  console.log(`${title}=${value}`);
+}
+
+labeler();
+// OUTPUT: title=undefined
+
+labeler('fish');
+// OUTPUT: title=fish
+
+labeler('fish', 'animal');
+// OUTPUT: animal=fish
+```
+
+#### Anonymous functions
+
+Functions in JavaScript are commonly assigned to a variable so that they can be passed as a parameter to some other function or stored as an object property. To easily support this common use you can define a function anonymously and assign it to a variable.
+
+```js
+// Function that takes a function as a parameter
+function doMath(operation, a, b) {
+  return operation(a, b);
+}
+
+// Anonymous function assigned to a variable
+const add = function (a, b) {
+  return a + b;
+};
+
+console.log(doMath(add, 5, 3));
+// OUTPUT: 8
+
+// Anonymous function assigned to a parameter
+console.log(
+  doMath(
+    function (a, b) {
+      return a - b;
+    },
+    5,
+    3
+  )
+);
+// OUTPUT: 2
+```
+
+#### Creating, passing, and returning functions
+
+Here are examples of assigning functions to variables, as well as using functions as parameters and return values.
+
+```js
+// Anonymous declaration of the function that is later assigned to a variable
+const add = function (a, b) {
+  return a + b;
+};
+
+// Function that logs as a side effect of its execution
+function labeler(label, value) {
+  console.log(label + '=' + value);
+}
+
+// Function that takes a function as a parameter and then executes the function as a side effect
+function addAndLabel(labeler, label, adder, a, b) {
+  labeler(label, adder(a, b));
+}
+
+// Passing a function to a function
+addAndLabel(labeler, 'a+b', add, 1, 3);
+// OUTPUT: a+b=4
+
+// Function that returns a function
+function labelMaker(label) {
+  return function (value) {
+    console.log(label + '=' + value);
+  };
+}
+
+// Assign a function from the return value of the function
+const nameLabeler = labelMaker('name');
+
+// Calling the returned function
+nameLabeler('value');
+// OUTPUT: name=value
+```
+
+#### Inner functions
+
+Functions can also be declared inside other functions. This allows you to modularize your code without always exposing private details.
+
+```js
+function labeler(value) {
+  function stringLabeler(value) {
+    console.log('string=' + value);
+  }
+  function numberLabeler(value) {
+    console.log('number=' + value);
+  }
+
+  if (typeof value == 'string') {
+    stringLabeler(value);
+  } else if (typeof value == 'number') {
+    numberLabeler(value);
+  }
+}
+
+labeler(5);
+// OUTPUT: number=5
+
+labeler('fish');
+// OUTPUT: string=fish
+```
+
+
+### JavaScript arrow function
+
+Because functions are first order objects in JavaScript they can be declared anywhere and passed as parameters. This results in code with lots of anonymous functions cluttering things up. To make the code more compact the `arrow` syntax was created. This syntax replaces the need for the `function` keyword with the symbols `=>` placed after the parameter declaration. The enclosing curly braces are also optional.
+
+This is a function in arrow syntax that takes no parameters and always returns 3.
+
+```js
+() => 3;
+```
+
+The following two invocations of sort are equivalent.
+
+```js
+const a = [1, 2, 3, 4];
+
+// standard function syntax
+a.sort(function (v1, v2) {
+  return v1 - v2;
+});
+
+// arrow function syntax
+a.sort((v1, v2) => v1 - v2);
+```
+
+Besides being compact, the `arrow` function syntax has some important semantic differences from the standard function syntax. This includes restrictions that arrow functions cannot be used for constructors or iterator generators.
+
+#### Return values
+
+Arrow functions also have special rules for the `return` keyword. The return keyword is optional if no curly braces are provided for the function and it contains a single expression. In that case the result of the expression is automatically returned. If curly braces are provided then the arrow function behaves just like a standard function.
+
+```js
+() => 3;
+// RETURNS: 3
+
+() => {
+  3;
+};
+// RETURNS: undefined
+
+() => {
+  return 3;
+};
+// RETURNS: 3
+```
+
+#### This pointer
+
+Next, arrow functions inherit the `this` pointer from the scope of where it is created. This makes what is known as a `closure`. A closure allows a function to continue referencing its creation scope, even after it has passed out of that scope. This can be tricky to wrap your head around, and we discuss it in detail when we later talk about JavaScript `scope`. For now consider the following example.
+
+The function `makeClosure` returns an anonymous function using the arrow syntax. Notice that the `a` parameter is overridden, a new `b` variable is created, and both `a` and `b` are referenced in the arrow function. Because of that reference, they are both part of the closure for the returned function.
+
+```js
+function makeClosure(a) {
+  a = 'a2';
+  const b = 'b2';
+  return () => [a, b];
+}
+```
+
+Next, we declare the variables `a` and `b` at the top level scope, and call `makeClosure` with `a`.
+
+```js
+const a = 'a';
+const b = 'b';
+
+const closure = makeClosure(a);
+```
+
+Now, when we call `closure` function it will output the values contained in scope where it was created instead of the current values of the variables.
+
+```js
+console.log(closure());
+// OUTPUT: ['a2', 'b2']
+
+console.log(a, b);
+// OUTPUT: 'a' 'b'
+```
+
+Closures provide a valuable property when we do things like execute JavaScript within the scope of an HTML page, because it can remember the values of variables when the function was created instead of what they are when they are executed.
+
+#### Putting it all together
+
+Now that you know how functions work in JavaScript, let's look at an example that demonstrates the use of functions, arrow functions, parameters, a function as a parameter (callback), closures, and browser event listeners. This is done by implementing a `debounce` function.
+
+The point of a debounce function is to only execute a specified function once within a given time window. Any requests to execute the debounce function more frequently than this will case the time window to reset. This is important in cases where a user can trigger expensive events thousands of times per second. Without a debounce the performance of your application can greatly suffer.
+
+The following code calls the browser's `window.addEventListener` function to add a callback function that is invoked whenever the user scrolls the browser's web page. The first parameter to `addEventListener` specifies that it wants to listen for `scroll` events. The second parameter provides the function to call when a scroll event happens. In this case we call a function named `debounce`.
+
+The debounce function takes two parameters, the time window for executing the window function, and the window function to call within that limit. In this case we will execute the arrow function at most every 500 milliseconds.
+
+```js
+window.addEventListener(
+  'scroll',
+  debounce(500, () => {
+    console.log('Executed an expensive calculation');
+  })
+);
+```
+
+The debounce function implements the execution of windowFunc within the restricted time window by creating a closure that contains the current timeout and returning a function that will reset the timeout every time it is called. The returned function is what the scroll event will actually call when the user scrolls the page. However, instead of directly executing the `windowFunc` it sets a timer based on the value of `windowMs`. If the debounce function is called again before the window times out then it resets the timeout.
+
+```js
+function debounce(windowMs, windowFunc) {
+  let timeout;
+  return function () {
+    console.log('scroll event');
+    clearTimeout(timeout);
+    timeout = setTimeout(() => windowFunc(), windowMs);
+  };
+}
+```
+
+You can experiment with this in [CodePen](https://codepen.io/leesjensen/pen/XWxVBRx). In this example, the background color will change as long as the user is scrolling. When they stop the background reverts back to white.
+
