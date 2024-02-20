@@ -34,44 +34,22 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1em;
 }
 
-#welcome {
-    margin: 0;
+#whisper_output {
+    padding: 12%;
+    background: rgb(80, 80, 80);
+    border-radius: 8px;
 }
 
-#welcome::after {
+#output_placeholder::before {
     content: "|";
+    font-weight: bold;
     animation: cursor_blink 1.5s steps(2) infinite;
 }
 
-form {
-    padding: 1.5em 1.5em .5em 1.5em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#username, #password {
-    font-family: 'Noto Sans Mono';
-    font-size: 1.5em;
-    text-align: center;
-    
-    border: none;      
-    background: rgb(70, 70, 70); 
-    color: white;
-    padding: .5em .65em;   
-}
-
-#username {
-    border-radius: 3px 3px 0 0;
-}
-
-#password {
-    border-radius: 0 0 3px 3px;
-}
-
-label {
+.custom_button {
     background-color: rgb(70, 70, 70); 
     border-radius: 5px;
     padding: .65em 1.5em;
@@ -79,7 +57,7 @@ label {
     font-weight: bold;
 }
 
-label:hover {
+.custom_button:hover {
     color: white
 }
 
