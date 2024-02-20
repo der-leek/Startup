@@ -35,10 +35,6 @@ main {
     justify-content: center;
 }
 
-#welcome {
-    margin: 0;
-}
-
 form {
     padding: 1.5em 1.5em .5em 1.5em;
     display: flex;
@@ -54,7 +50,7 @@ form {
     border: none;      
     background: rgb(70, 70, 70); 
     color: white;
-    padding: .5em .65em;   
+    padding: .5em 1.5em;   
 }
 
 #email {
@@ -68,7 +64,8 @@ form {
 .custom_button {
     background-color: rgb(70, 70, 70); 
     border-radius: 5px;
-    padding: .65em 1.5em;
+    padding: .65em 5em;
+    margin: 0;
     color: rgb(225, 225, 225);
     font-weight: bold;
 }
@@ -84,6 +81,10 @@ footer {
     text-align: center;
     justify-content: center;
     border-radius: 5px 5px 0 0;
+}
+
+#disclosure {
+    padding: 1em 25%; 
 }
 
 a {
