@@ -12,27 +12,18 @@ body {
   animation: intro 1s ease-in;
 }
 
-.mobile {
-    display: none;
-}
-
 header {
     flex: 0 .5em;
+}
+
+.mobile {
+    display: none;
 }
 
 #mobile_menu {
     display: none;
     text-align: left;
     padding: 0;
-}
-
-ul {
-    padding: 0;
-}
-
-#mobile_menu_trigger:hover #mobile_menu {
-    display: block;
-    animation: menu_display 1s ease-in;
 }
 
 .menu_item {
@@ -73,7 +64,7 @@ form {
     border: none;      
     background: rgb(70, 70, 70); 
     color: white;
-    padding: .5em 1.15em;   
+    padding: .5em .5em;   
 }
 
 #email {
@@ -151,10 +142,21 @@ a:hover {
 }
 
 @media (orientation: portrait) {
+    header div {
+        flex-direction: column;
+        justify-content: center;
+    }
     header nav {
         display: none;
     }
     .mobile {
         display: block;
+    }
+    ul {
+        padding: 0;
+    }
+    #mobile_menu_trigger:hover #mobile_menu {
+        display: block;
+        animation: menu_display 1s ease-in;
     }
 }
