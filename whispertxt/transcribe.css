@@ -37,7 +37,7 @@ header div {
     padding: 0 1em;
 }
 
-header td, span {
+header td, p {
     padding: 0 1em;
 }
 
@@ -81,6 +81,13 @@ main {
 
 #save_whisper:hover {
     cursor: pointer;
+}
+
+#submit_or_new {
+    display: flex;
+    column-gap: 2em;
+    padding: 0 2em;
+    text-align: center;
 }
 
 footer {

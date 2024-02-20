@@ -37,8 +37,16 @@ header div {
     padding: 0 1em;
 }
 
-header td, span {
-    padding: 0 1em;
+header td, p {
+    margin: 0;
+    padding: 0 1em 0 0;
+}
+
+#source {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
 }
 
 main {
@@ -51,6 +59,8 @@ main {
 
 #welcome {
     margin: 0;
+    display: block;
+    text-align: center;
 }
 
 #welcome::after {
