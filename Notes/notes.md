@@ -1478,3 +1478,53 @@ console.log(obj, json, objFromJson);
 ```
 
 Note that in this example, JSON cannot represent the JavaScript `undefined` object and so it gets dropped when converting from JavaScript to JSON.
+
+## 2/24/24
+### Midterm Review:
+- Which is NOT a valid what to include JavaScript in HTML?
+  - \<script\>1+1\</script\>
+  - \<script src='main.js'\>
+  - \<div onclick='1+1' /\>
+  - **\<javascript\>1+1\</javascript\>**
+- Executing `const f = y => ++y; console.log(f(3));` will output:
+  - **4**
+  - 3
+  - 2
+  - undefined
+- What is the order of the CSS box model, starting from the outside going in?
+  - **margin, border, padding, content**
+- The following command makes a script executable:
+  - ssh deploy.sh
+  - ls -la deploy.sh
+  - **chmod +x deploy.sh**
+    - *change mode, add executable functionality*
+  - sudo deploy.sh
+- What does the `let a = ['cow', 'rat', 'fish']; let b = a.reduce((a,v) => [a,v].join(':)); console.log(b)` output?
+  - **cow:rat:fish**
+- Which of the following is a DNS subdomain:
+  - byu.edu
+  - byu
+  - edu
+  - **c260.cs.byu.edu** 
+- What does `let a = ['cow', 'rat', 'fish']; let b = a.filter(v => v.match(/A|f/i)); console.log(b);` output?
+  - ['rat','fish']
+  - ['cow','rat','fish']
+  - **['fish']**
+  - ['cow','fish']
+- In HTML, what does \<div\> do?
+  - creates a division element
+- Which of the following is valid JSON?
+  - {"x":undefined}
+  - {x:3}
+  - **{"x":3}**
+  - {'x':3}
+- To point to another DNS record, you should use the following DNS record type:
+  - SOA
+  - A
+  - **CNAME**
+  - TXT
+- Which of the following is **NOT** a valid JS function?
+  - const f = (x) => {}
+  - const f = function(x) {}
+  - function f(x) {}
+  - **function f(x) = {}**
