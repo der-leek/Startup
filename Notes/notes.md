@@ -2264,3 +2264,371 @@ You can also add event listeners directly in the HTML. For example, here is a `o
 ```html
 <button onclick='alert("clicked")'>click me</button>
 ```
+
+### Local storage
+
+📖 **Deeper dive reading**: [MDN LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+
+The browser's `localStorage` API provides the ability to persistently store and retrieve data (i.e. scores, usernames, etc.,) on a user's browser across user sessions and HTML page renderings. For example, your frontend JavaScript code could store a user's name on one HTML page, and then retrieve the name later when a different HTML page is loaded. The user's name will also be available in local storage the next time the same browser is used to access the same website.
+
+In addition to persisting application data between page renderings, `localStorage` is also used as a cache for when data cannot be obtained from the server. For example, your frontend JavaScript could store the last high scores obtained from the service, and then display those scores in the future if the service is not available.
+
+#### How to use LocalStorage
+
+There are four main functions that can be used with localStorage.
+
+| Function             | Meaning                                      |
+| -------------------- | -------------------------------------------- |
+| setItem(name, value) | Sets a named item's value into local storage |
+| getItem(name)        | Gets a named item's value from local storage |
+| removeItem(name)     | Removes a named item from local storage      |
+| clear()              | Clears all items in local storage            |
+
+A local storage value must be of type `string`, `number`, or `boolean`. If you want to store a JavaScript object or array, then you must first convert it to a JSON string with `JSON.stringify()` on insertion, and parse it back to JavaScript with `JSON.parse()` when retrieved.
+
+#### Example
+
+Open your startup website and run the following code in the browser's dev tools console window.
+
+```js
+let user = 'Alice';
+
+let myObject = {
+  name: 'Bob',
+  info: {
+    favoriteClass: 'CS 260',
+    likesCS: true,
+  },
+};
+
+let myArray = [1, 'One', true];
+
+localStorage.setItem('user', user);
+localStorage.setItem('object', JSON.stringify(myObject));
+localStorage.setItem('array', JSON.stringify(myArray));
+
+console.log(localStorage.getItem('user'));
+console.log(JSON.parse(localStorage.getItem('object')));
+console.log(JSON.parse(localStorage.getItem('array')));
+```
+
+**Output**
+
+```sh
+Alice
+{name: 'Bob', info: {favoriteClass: 'CS 260', likesCS: true}
+[1, 'One', true]
+```
+
+Notice that you are able to see the round trip journey of the local storage values in the console output. If you want to see what values are currently set for your application, then open the `Application` tab of the dev tools and select `Storage > Local Storage` and then your domain name. With the dev tools you can add, view, update, and delete any local storage values.
+
+![Local storage dev tools](localStorageDevTools.png)
+
+
+### Promises
+
+📖 **Deeper dive reading**:
+
+- [MDN Using Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+- [MDN Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+The rendering thread of your HTML executes on a single threaded. That means that you cannot take a long time processing JavaScript on the main rendering thread. Long running, or blocking tasks, should be executed with the use of a JavaScript `Promise`. The execution of a promise allows the main rendering thread to continue while some action is executed in the background.
+You create a promise by calling the Promise object constructor and passing it an executor function that runs the asynchronous operation. Executing asynchronously means that promise constructor may return before the promise executor function runs. The state of the promise execution is always in one of three states different states.
+
+1. **pending** - Currently running asynchronously
+1. **fulfilled** - Completed successfully
+1. **rejected** - Failed to complete
+
+We can demonstrate asynchronous execution by using the standard JavaScript `setTimeout` function to create a delay in the execution of the code. The setTimeout function takes the number of milliseconds to wait and a function to call after that amount of time has expired. We call the delay function in a for loop in the promise executor and also a for loop outside the promise so that both code blocks are running in parallel.
+
+```js
+const delay = (msg, wait) => {
+  setTimeout(() => {
+    console.log(msg, wait);
+  }, 1000 * wait);
+};
+
+new Promise((resolve, reject) => {
+  // Code executing in the promise
+  for (let i = 0; i < 3; i++) {
+    delay('In promise', i);
+  }
+});
+
+// Code executing after the promise
+for (let i = 0; i < 3; i++) {
+  delay('After promise', i);
+}
+
+// OUTPUT:
+//   In promise 0
+//   After promise 0
+//   In promise 1
+//   After promise 1
+//   In promise 2
+//   After promise 2
+```
+
+#### Resolving and rejecting
+
+Now that we know how to use a promise to execute asynchronously, we need to be able to set the state to `fulfilled` when things complete correctly, or to `rejected` when an error happens. The promise executor function takes two functions as parameters, `resolve` and `reject`. Calling `resolve` sets the promise to the `fulfilled` state, and calling `reject` sets the promise to the `rejected` state.
+
+Consider the following "coin toss" promise that waits ten seconds and then has a fifty percent chance of resolving or rejecting.
+
+```js
+const coinToss = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (Math.random() > 0.5) {
+      resolve('success');
+    } else {
+      reject('error');
+    }
+  }, 10000);
+});
+```
+
+If you log the coinToss promise object to the console immediately after calling the constructor, it will display that it is in the `pending` state.
+
+```js
+console.log(coinToss);
+// OUTPUT: Promise {<pending>}
+```
+
+If you then wait ten seconds and the log the coinToss promise object again, the state will either show as `fulfilled` or `rejected` depending upon the way the coin landed.
+
+```js
+console.log(coinToss);
+// OUTPUT: Promise {<fulfilled>}
+```
+
+#### Then, catch, finally
+
+With the ability to asynchronously execute and set the resulting state, we now need a way to generically do something with the result of a promise after it resolves. This is done with functionality similar to exception handling. The promise object has three functions: `then`, `catch`, and `finally`. The `then` function is called if the promise is fulfilled, `catch` is called if the promise is `rejected`, and `finally` is always called after all the processing is completed.
+
+We can rework our coinToss example and make it so 10 percent of the time the coin falls off the table and resolves to the rejected state. Otherwise the promise resolves to fulfilled with a result of either `heads` or `tails`.
+
+```js
+const coinToss = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (Math.random() > 0.1) {
+      resolve(Math.random() > 0.5 ? 'heads' : 'tails');
+    } else {
+      reject('fell off table');
+    }
+  }, 10000);
+});
+```
+
+We then chain the `then`, `catch` and `finally` functions to the coinToss object in order to handle each of the possible results.
+
+```js
+coinToss
+  .then((result) => console.log(`Coin toss result: ${result}`))
+  .catch((err) => console.log(`Error: ${err}`))
+  .finally(() => console.log('Toss completed'));
+
+// OUTPUT:
+//    Coin toss result: tails
+//    Toss completed
+```
+
+
+### JavaScript Async/await
+
+📖 **Deeper dive reading**: [MDN async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+
+JavaScript Promise objects are great for asynchronous execution, but as developers began to build large systems with promises they started wanting a more concise representation. This was provided with the introduction of the `async/await` syntax. The `await` keyword wraps the execution of a promise and removed the need to chain functions. The `await` expression will block until the promise state moves to `fulfilled`, or throws an exception if the state moves to `rejected`. For example, if we have a function that returns a coin toss promise.
+
+```js
+const coinToss = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() > 0.1) {
+        resolve(Math.random() > 0.5 ? 'heads' : 'tails');
+      } else {
+        reject('fell off table');
+      }
+    }, 1000);
+  });
+};
+```
+
+We can create equivalent executions with either a promise `then/catch` chain, or an `await` with a `try/catch` block.
+
+**then/catch chain version**
+
+```js
+coinToss()
+  .then((result) => console.log(`Toss result ${result}`))
+  .catch((err) => console.error(`Error: ${err}`))
+  .finally(() => console.log(`Toss completed`));
+```
+
+**async, try/catch version**
+
+```js
+try {
+  const result = await coinToss();
+  console.log(`Toss result ${result}`);
+} catch (err) {
+  console.error(`Error: ${err}`);
+} finally {
+  console.log(`Toss completed`);
+}
+```
+
+#### async
+
+One important restriction for working with `await` is that you cannot call await unless it is called at the top level of the JavaScript, or is in a function that is defined with the `async` keyword. Applying the `async` keyword transforms the function so that it returns a promise that will resolve to the value that was previously returned by the function. Basically this turns any function into an asynchronous function, so that it can in turn make asynchronous requests.
+
+This can be demonstrated with a function that makes animal noises. Notice that the return value is a simple string.
+
+```js
+function cow() {
+  return 'moo';
+}
+console.log(cow());
+// OUTPUT: moo
+```
+
+If we designate the function to be asynchronous then the return value becomes a promise that is immediately resolved and has a value that is the return value of the function.
+
+```js
+async function cow() {
+  return 'moo';
+}
+console.log(cow());
+// OUTPUT: Promise {<fulfilled>: 'moo'}
+```
+
+We then change the cow function to explicitly create a promise instead of the automatically generated promise that the await keyword generates.
+
+```js
+async function cow() {
+  return new Promise((resolve) => {
+    resolve('moo');
+  });
+}
+console.log(cow());
+// OUTPUT: Promise {<pending>}
+```
+
+You can see that the promise is in the pending state because the promise's execution function has not yet resolved.
+
+#### await
+
+The `async` keyword declares that a function returns a promise. The `await` keyword wraps a call to the `async` function, blocks execution until the promise has resolved, and then returns the result of the promise.
+
+We can demonstrate `await` in action with the cow promise from above. If we log the output from invoking `cow` then we see that the return value is a promise. However, if we prefix the call to the function with the await keyword, execution will stop until the promise has resolved, at which point the result of the promise is returned instead of the actual promise object.
+
+```js
+console.log(cow());
+// OUTPUT: Promise {<pending>}
+
+console.log(await cow());
+// OUTPUT: moo
+```
+
+By combining `async`, to define functions that return promises, with `await`, to wait on the promise, you can create code that is asynchronous, but still maintains the flow of the code without explicitly using callbacks.
+
+#### Putting it all together
+
+You can see the benefit for `async`/`await` clearly by considering a case where multiple promises are required. For example, when calling the `fetch` web API on an endpoint that returns JSON, you would need to resolve two promises. One for the network call, and one for converting the result to JSON. A promise implementation would look like the following.
+
+```js
+const httpPromise = fetch('https://simon.cs260.click/api/user/me');
+const jsonPromise = httpPromise.then((r) => r.json());
+jsonPromise.then((j) => console.log(j));
+console.log('done');
+
+// OUTPUT: done
+// OUTPUT: {email: 'bud@mail.com', authenticated: true}
+```
+
+With async/await, you can clarify the code intent by hiding the promise syntax, and also make the execution block until the promise is resolved.
+
+```js
+const httpResponse = await fetch('https://simon.cs260.click/api/user/me');
+const jsonResponse = await httpResponse.json();
+console.log(jsonResponse);
+console.log('done');
+
+// OUTPUT: {email: 'bud@mail.com', authenticated: true}
+// OUTPUT: done
+```
+
+
+### Debugging JavaScript
+
+📖 **Deeper dive reading**: [MDN Console](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools)
+
+It is inevitable that your code is going to have problems, or bugs, at some point. That may be while you are originally authoring it, working on other code that changes assumed dependencies, or while enhancing the code with new functionality.
+
+Learning how to quickly discover, and resolve, bugs will greatly increase your value as a web developer. Additionally, debugging skills can also be used during the development process. By following a pattern of writing a block of code and then stepping through, or debugging, the block, you gain confidence that the block is working as desired before moving on to the next block.
+
+#### Console debugging
+
+📖 **Deeper dive reading**: [MDN Console](https://developer.mozilla.org/en-US/docs/Web/API/console)
+
+One of the simplest ways to debug your JavaScript code is to insert `console.log` functions that output the state of the code as it executes. For example, we can create a simple web application that has an HTML and JavaScript file that demonstrates the difference between `let` and `var`. By inserting `console.log` statements into the code, we can see what the value of each variable is as the code executes.
+
+**index.html**
+
+```html
+<body>
+  <h1>Debugging</h1>
+  <script src="index.js"></script>
+</body>
+```
+
+**index.js**
+
+```js
+var varCount = 20;
+let letCount = 20;
+
+console.log('Initial - var: %d, let: %d', varCount, letCount);
+
+for (var varCount = 1; varCount < 2; varCount++) {
+  for (let letCount = 1; letCount < 2; letCount++) {
+    console.log('Loop - var: %d, let: %d', varCount, letCount);
+  }
+}
+
+const h1El = document.querySelector('h1');
+h1El.textContent = `Result - var:${varCount}, let:${letCount}`;
+console.log('Final - var: %d, let: %d', varCount, letCount);
+```
+
+Take the following steps to see the result of console debugging.
+
+1. Create the above files in a test directory named testConsole
+1. Open the testConsole directory in VS Code
+1. Run index.html using the VS Code Live Server extension
+1. Open the Chrome browser debugger (press `F12`)
+1. Select the `Console` tab
+1. Refresh the browser
+
+You should see the following result.
+
+![JavaScript console debugging](javascriptDebugConsole.jpg)
+
+You can use the debugger console window to inspect variables without using the `console.log` function from your code. For example, if you type varCount in the console window it will print out the current value of varCount. You can also execute JavaScript directly in the console window. For example, if you type `varCount = 50` and press `Enter` it will change the current value of varCount.
+
+![JavaScript console debugging variables](javascriptDebugConsoleVars.jpg)
+
+#### Browser debugging
+
+`console.log` debugging is great for times when you just need to quickly see what is going on in your code, but to really understand the code as it executes you want to use the full capabilities of the browser's debugger.
+
+Using the same setup we used for `console.log` debugging, open up Chrome's browser debugger, but this time select the source tab. This will display the source files that comprise the currently rendered content.
+
+![JavaScript source debugging](javascriptDebugSource.jpg)
+
+You can either select `index.js` from the source view on the left, or press `CTRL-P` (on Windows) or `⌘-P` (on Mac) and then select `index.js` from the list that pops up. Then set a breakpoint on line 4 by clicking on the line number on the left of the displayed source code. This makes it so that the execution of code will pause whenever that line is executed. Refreshing the browser window will cause `index.js` to reload and pause on the breakpoint.
+
+![JavaScript breakpoint](javascriptDebugBreakpoint.jpg)
+
+With the browser paused in the debugger you can move your mouse cursor over a variable to see its value, see what variables are in scope, set watches on variables, or use the console to interact with the code.
+
+This gives you complete control to inspect what the JavaScript code is doing and experiment with possible alternative directions for the code. Take some time to poke around in the debugger. Learning how to exploit its functionality will make you a much better web developer.
