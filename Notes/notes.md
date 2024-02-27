@@ -2632,3 +2632,11 @@ You can either select `index.js` from the source view on the left, or press `CTR
 With the browser paused in the debugger you can move your mouse cursor over a variable to see its value, see what variables are in scope, set watches on variables, or use the console to interact with the code.
 
 This gives you complete control to inspect what the JavaScript code is doing and experiment with possible alternative directions for the code. Take some time to poke around in the debugger. Learning how to exploit its functionality will make you a much better web developer.
+
+
+## 2/27/24
+### Notes from meeting with David
+- For JS deliverable:
+  - focus on rubric
+- use stdin stdout as much as possible
+- Textgen animation: https://www.cssscript.com/chatgpt-text-typing-effect/
