@@ -2640,3 +2640,24 @@ This gives you complete control to inspect what the JavaScript code is doing and
   - focus on rubric
 - use stdin stdout as much as possible
 - Textgen animation: https://www.cssscript.com/chatgpt-text-typing-effect/
+
+## 3/1/24
+### Javascript Deliverable
+#### index.html
+- get name, store to localstorage variable, display username
+
+#### upload.html
+- drag and drop functionality 
+- next button verifies that a file has been selected, injects error message if not (do this via a fade in the button itself)
+- navigate to next page if successful
+
+#### transcribe.html
+- code for text generation, set to periodically output text on a cycle
+- save button downloads transcribed text as .txt file
+- move blinking cursor to after the text
+
+#### join.html
+- store user data into the map
+  - key: username
+  - value: object with email and password
+- center mobile link positioning 
