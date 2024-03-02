@@ -49,7 +49,7 @@ main {
     justify-content: center;
 }
 
-form {
+#form {
     padding: 1.5em 0;
     display: flex;
     flex-direction: column;
@@ -154,6 +154,10 @@ a:hover {
     }
     ul {
         padding: 0;
+    }
+    li {
+        padding: .25em 0;
+        text-align: center;
     }
     #mobile_menu_trigger:hover #mobile_menu {
         display: block;
