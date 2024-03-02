@@ -60,7 +60,7 @@ main {
     animation: cursor_blink 1.5s steps(2) infinite;
 }
 
-form {
+#form {
     padding: 1.5em 1.5em .5em 1.5em;
     display: flex;
     flex-direction: column;
@@ -95,7 +95,7 @@ form {
 }
 
 .custom_button:hover {
-    color: white
+    color: white;
 }
 
 #submit_credentials {
@@ -128,6 +128,11 @@ a:visited {
 a:hover {
     color: white;
 }
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }  
 
 @keyframes intro {
     0% {
