@@ -50,3 +50,5 @@ For this deliverable, I properly styled whisper.txt into nearly its final appear
 - Application elements - All elements are clearly visible and adhere to a cohesive theme
 - Application text content - I used Google's Noto Sans Mono font across the entire project
 - Application images - I employed my application image along the page's footer
+
+## JS Deliverable
