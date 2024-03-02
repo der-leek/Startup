@@ -11,19 +11,20 @@ function typewriter(element, text, index=18) {
         setTimeout(() => typewriter(element, text, index), random_delay);
     } else {
         element.innerHTML = text.slice(0, index);
-        setTimeout(() => window.location.href = "upload.html", 500)
+        document.body.classList.add('fade-out'); 
+        setTimeout(() => window.location.href = "upload.html", 1000)
     }
 }
 
 function login() {
-    const user_id = document.querySelector("#username");
-    localStorage.setItem("user_name", user_id.value);
+    localStorage.setItem("user_name", document.querySelector("#username").value);
+    const username = localStorage.getItem("user_name")
     const password = document.querySelector("#password");
 
     let welcome = document.getElementById("welcome");
     
-    if (user_id.value != "" && password.value != "") {
-        text = welcome.textContent + ", " + user_id.value;
+    if (username != "" && password.value != "") {
+        text = welcome.textContent + ", " + username;
         typewriter(welcome, text);
     }
   }
