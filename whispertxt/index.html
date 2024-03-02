@@ -50,19 +50,14 @@
     <main>
       <h1 id="welcome">welcome to whisper</h1>
 
-      <form method="post" action="javascript:login()">
+      <div id="form">
         <input type="text" id="username" placeholder="username" required/>
         <input type="password" id="password" placeholder="password" required/>
         <!-- add option to show/hide password (maybe an filled/hollow circle)-->
-      </form>
+      </div>
       
-      <button type="submit" id="submit" style="display: none;">sign in</button>
-      <label for="submit" class="custom_button" id="submit_credentials">
-        <a href="upload.html">log in</a>
-      </label>
-
-      <!-- rendering of login confirmation (credentials match database information) -->
-      <p>success: welcome &lt;user's name&gt;</p>
+      <button type="submit" id="submit" style="display: none;" onclick="login()">log in</button>
+      <label for="submit" class="custom_button" id="submit_credentials">log in</label>
     </main>
 
     <footer>
