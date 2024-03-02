@@ -52,3 +52,9 @@ For this deliverable, I properly styled whisper.txt into nearly its final appear
 - Application images - I employed my application image along the page's footer
 
 ## JS Deliverable
+The JavaScript I wrote for this deliverable makes the site functional for a single user. I used placeholders to signal where future technologies will be applied.
+
+- Login - Pressing the login button stores the user's name locally as a placeholder for the database functionality.
+- Database - The user's name is displayed prominently on each page related to transcription. Additionally, when joining whisper, the user's credentials are stored into a map data structure. This is done locally but will be stored on a database in the future.
+- WebSocket - I wrote code to display the transcribed text on screen. This is currently accomplished by a placeholder.
+- Application logic - Most of the text animates as if being typed. Button clicks provide validation and trigger animations.
