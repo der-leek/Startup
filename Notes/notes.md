@@ -2639,12 +2639,12 @@ This gives you complete control to inspect what the JavaScript code is doing and
 - For JS deliverable:
   - focus on rubric
 - use stdin stdout as much as possible
-- Textgen animation: https://www.cssscript.com/chatgpt-text-typing-effect/
+- [Textgen animation](https://www.cssscript.com/chatgpt-text-typing-effect/)
 
 ## 3/1/24
-### Javascript Deliverable
+### [Javascript Deliverable](https://github.com/webprogramming260/.github/blob/main/profile/javascript/startupJavascript/startupJavascript.md)
 #### index.html
-- get name, store to localstorage variable, display username
+- get name, store to localstorage variable, display username (have form fade out, type out username after welcome)
 
 #### upload.html
 - drag and drop functionality 
@@ -2652,7 +2652,7 @@ This gives you complete control to inspect what the JavaScript code is doing and
 - navigate to next page if successful
 
 #### transcribe.html
-- code for text generation, set to periodically output text on a cycle
+- code for text generation, set to periodically output text
 - save button downloads transcribed text as .txt file
 - move blinking cursor to after the text
 
