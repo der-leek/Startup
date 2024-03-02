@@ -50,13 +50,21 @@ main {
     gap: 1em;
 }
 
+#username { 
+    /* fix this so it aligns in the top left corner for desktop, right under github for mobile */
+    padding-left: 7.5%;
+    font-size: 1.25em;
+    margin-right: auto;
+    font-weight: bold;
+}
+
 #whisper_output {
     padding: 10%;
     background: rgb(80, 80, 80);
     border-radius: 8px;
 }
 
-#output_placeholder::before {
+#output_placeholder::after {
     content: "|";
     font-weight: bold;
     animation: cursor_blink 1.5s steps(2) infinite;
