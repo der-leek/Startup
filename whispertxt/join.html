@@ -7,6 +7,7 @@
     <title>whisper.txt</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="join.css">
+    <script src="join.js"></script>
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
@@ -47,14 +48,14 @@
     </header>
 
     <main>
-      <form method="post" action="">
-          <input type="email" id="email" placeholder="enter your email">
-          <input type="text" id="username" placeholder="create a username">
-          <input type="password" id="password" placeholder="create a password">
-          <input type="password" id="confirmation" placeholder="re-enter your password">
-      </form>
+      <div id="form">
+          <input type="email" id="email" class="field" placeholder="enter your email">
+          <input type="text" id="username" class="field" placeholder="create a username">
+          <input type="password" id="password" class="field" placeholder="create a password">
+          <input type="password" id="confirmation" class="field" placeholder="re-enter your password">
+      </div>
       
-      <p class="custom_button" id="submit_credentials">join whisper</p>
+      <p class="custom_button" id="submit_credentials" onclick="new_user()">join whisper</p>
     </main>
 
     <footer>
