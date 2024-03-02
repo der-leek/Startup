@@ -7,6 +7,7 @@
     <title>whisper.txt</title>
     <link rel="icon" href="favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="transcribe.css">
+    <script src="transcribe.js"></script>
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
@@ -47,13 +48,15 @@
     </header>
 
     <main>
+      <div id="username"></div>
       <div id="whisper_output">
-        <p id="output_placeholder">this is a placeholder for transcribed text (whispers) using websocket</p>
+        <p id="output_placeholder">this is a placeholder for transcribed text (whispers) using websocket.  
+          clicking save currently places this text into local storage</p>
       </div>
 
       <div id="submit_or_new">
         <button id="submit_button" style="display: none;">save this whisper</button>
-        <label for="submit_button" class="custom_button" id="save_whisper">save this whisper</label>
+        <label for="submit_button" class="custom_button" id="save_whisper" onclick="save()">save this whisper</label>
         <a href="upload.html" class="custom_button">whisper again</a>
         <!-- ADD SAVING DISCLOSURE -->
       </div>
