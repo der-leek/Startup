@@ -10,6 +10,7 @@
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp)
 ### whisper.cpp usage:
 ![](whisper_cpp_usage.jpg)
+./main -m models/ggml-base.bin -f path_to_input_filename -otxt -of name_of_output_file
 
 ## 1/23/24
 - learned how to create an AWS EC2 instance
@@ -3641,3 +3642,33 @@ app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
 ```
+
+### Service notes
+the button for uploading the audio file needs to (in this order)
+- verify that the audio file is compatible
+- POST the audio file to the server
+  - display uploading file message
+
+- trigger an asynchronous function that starts the transcription (calls the command line function) <!-- FOR WEBSOCKET -->
+  
+  ```js 
+  const { exec } = require('child_process');
+  exec('whisper.sh', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.error(`stderr: ${stderr}`);
+  });
+  ```
+
+- move to the transcription page
+
+Transcription page needs to process in this order <!-- FOR WEBSOCKET -->
+- Display a transcribing audio message
+  - once output text file exists, delete transcribing message, delete audio file
+  - read text file and inject text into html
+
+To download audio
+- GET output.txt
