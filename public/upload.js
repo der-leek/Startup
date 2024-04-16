@@ -1,33 +1,41 @@
 window.onload = () => {
     document.querySelector('#username').innerHTML = localStorage.getItem('user_name');
-}
+};
 
-const fileInput = document.getElementById('file_input');
+async function upload_file(file_input) {
+    const file = file_input.files[0];
 
-fileInput.addEventListener('change', async (event) => {
-  const file = event.target.files[0];
-  const formData = new FormData();
-  formData.append('file_input', file);
+    if (!file) {
+    console.error('No file selected');
+    return;
+    }
 
-  try {
-    const response = await fetch('/upload', {
-      method: 'POST',
-      body: formData,
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/uploads', {
+        method: 'POST',
+        body: formData,
     });
 
     if (response.ok) {
-      console.log('File uploaded successfully!');
+        console.log('File uploaded successfully');
     } else {
-      console.error('Error uploading file:', response.status);
+        console.error('File upload failed');
     }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-});
-
-function next() {
-    // if a file is selected
-        // call whisper.cpp
-        // move to transcribe
-    // else output error message
+    
 }
+
+// function next() {
+//     // if a file is selected
+//         // call whisper.cpp
+//         // move to transcribe
+//     // else output error message
+// }
+
+// Check if the file is an audio file
+    //   const allowedTypes = ['audio/mpeg', 'audio/mp4', 'audio/mpeg', 'audio/mpga', 'audio/m4a', 'audio/wav', 'audio/webm'];
+    //   if (!allowedTypes.includes(file.type)) {
+    //     console.error('Invalid file type. Please select an audio file.');
+    //     return;
+    //   }

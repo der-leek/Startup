@@ -14,7 +14,7 @@ function typewriter(element, text, index=18) {
 }
 
 function save() {
-    fetch('./downloads/output.txt')
+    fetch('/downloads/output.txt')
         .then(response => {
             if (response.ok) {
                 return response.blob(); // Get the file as a blob
@@ -42,6 +42,15 @@ window.onload = () => {
     document.querySelector('#username').innerHTML = localStorage.getItem('user_name');
     let output_text_element = document.querySelector('#output_placeholder');
     let output_content = output_text_element.textContent;
+    fetch('https://api.chucknorris.io/jokes/random?category=dev')
+        .then(response => response.json())
+        .then(data => {
+            if (data.value) output_content = data.value;
+        })
+        .catch(error => {
+            console.error('Error fetching joke:', error);
+        });
+    
     output_text_element.textContent = "";
     setTimeout(() => typewriter(output_text_element, output_content), 250) 
 }

@@ -48,12 +48,14 @@
 
     <main>
       <div id="username"></div>
+      
       <div id="drag_drop">
         <!-- Container to hold drag/drop area, browse button -->
           <!-- MAKE CLICKABLE -->
         <label for="file_input" id="drop_button" class="custom_button">drop or click here to upload your audio file</label>
-        <input type="file" id="file_input" accept=".mp3, .mp4, .mpeg, .mpga, .m4a, .wav, .webm" style="display: none">
+        <input type="file" id="file_input" accept=".mp3, .mp4, .mpeg, .mpga, .m4a, .wav, .webm" style="display: none" multiple="false" onchange="upload_file(this)">
       </div>
+
       <p class="custom_button">
         <a href="transcribe.html">next</a>
       </p>
