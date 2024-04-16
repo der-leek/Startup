@@ -14,7 +14,28 @@ function typewriter(element, text, index=18) {
 }
 
 function save() {
-    localStorage.setItem("transcription", document.querySelector('#output_placeholder').textContent);
+    fetch('./downloads/output.txt')
+        .then(response => {
+            if (response.ok) {
+                return response.blob(); // Get the file as a blob
+            } else {
+                throw new Error('Error downloading file');
+            }
+            })
+        .then(blob => {
+            // Create a temporary link to initiate the download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'output.txt'; // Set the desired file name
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            })
+        .catch(error => {
+            console.error('Error downloading file:', error);
+    });
 }
 
 window.onload = () => {
