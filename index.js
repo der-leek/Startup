@@ -28,6 +28,10 @@ app.use(cors());
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+// secureApiRouter verifies credentials for endpoints
+var secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
+
 // Configure the fileUpload middleware
 const upload = multer({
     storage: multer.diskStorage({
@@ -38,7 +42,7 @@ const upload = multer({
     }),
   });
   
-app.post('/uploads', upload.single('file'), (req, res) => {
+secureApiRouter.post('/uploads', upload.single('file'), (req, res) => {
   if (req.file) {
     res.send({
       message: 'Uploaded succeeded',
@@ -49,11 +53,11 @@ app.post('/uploads', upload.single('file'), (req, res) => {
   }
 });
 
-app.get('/file/:filename', (req, res) => {
+secureApiRouter.get('/file/:filename', (req, res) => {
   res.sendFile(__dirname + '/uploads/${req.params.filename}');
 });
 
-app.use((err, req, res, next) => {
+secureApiRouter.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     res.status(413).send({ message: err.message });
   } else {
@@ -61,7 +65,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.get('/downloads/:filename', (req, res) => {
+secureApiRouter.get('/downloads/:filename', (req, res) => {
   res.download(path.join(__dirname, 'downloads', req.params.filename));
 });
 
@@ -90,8 +94,13 @@ apiRouter.post('/auth/login', async (req, res) => {
       res.send({ id: user._id });
       return;
     }
+    else {
+      res.status(401).send({ msg: 'your username or password is incorrect' });
+      return;
+    }
   }
-  res.status(401).send({ msg: 'Unauthorized' });
+  res.status(401).send({ msg: 'you must first join whisper to use it' });
+  return;
 });
 
 // DeleteAuth token if stored in cookie
@@ -110,10 +119,6 @@ apiRouter.get('/user/:username', async (req, res) => {
   }
   res.status(404).send({ msg: 'Unknown' });
 });
-
-// secureApiRouter verifies credentials for endpoints
-var secureApiRouter = express.Router();
-apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
   authToken = req.cookies[authCookieName];
