@@ -53,4 +53,17 @@ window.onload = () => {
     
     output_text_element.textContent = "";
     setTimeout(() => typewriter(output_text_element, output_content), 250) 
+
+    let login_logout = document.querySelector('#login_logout');
+    login_logout.innerHTML = '<a>logout</a>';
+    login_logout.addEventListener('click', logout);
+    login_logout.style.cursor = 'pointer';
+    login_logout.style.color = 'rgb(220, 220, 220)';
 }
+
+function logout() {
+    localStorage.removeItem('user_name');
+    fetch(`/api/auth/logout`, {
+      method: 'DELETE',
+    }).then(() => (window.location.href = '/'));
+  }
