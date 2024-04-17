@@ -1,41 +1,51 @@
 function typewriter(element, text, index=18) {
-    if (index < text.length) {
-        element.innerHTML = text.slice(0, index);
-        index++;
-        
-        let random_delay = Math.random() * 10 + 50; // Base delay
-        if (Math.random() < 0.25) { // 25% chance of a pause
-            random_delay += Math.random() * 300; // Add up to 0.3 seconds extra
-        }
+  if (index < text.length) {
+      element.innerHTML = text.slice(0, index);
+      index++;
+      
+      let random_delay = Math.random() * 10 + 50; // Base delay
+      if (Math.random() < 0.25) { // 25% chance of a pause
+          random_delay += Math.random() * 300; // Add up to 0.3 seconds extra
+      }
 
-        setTimeout(() => typewriter(element, text, index), random_delay);
-    } else {
-        element.innerHTML = text.slice(0, index);
-        document.body.classList.add('fade-out'); 
-        setTimeout(() => window.location.href = "upload.html", 1000)
-    }
+      setTimeout(() => typewriter(element, text, index), random_delay);
+  } else {
+      element.innerHTML = text.slice(0, index);
+  }
 }
 
 async function login() {
-    localStorage.setItem("user_name", document.querySelector("#username").value);
-    
-    loginOrCreate(`/api/auth/login`);
-
-    let welcome = document.getElementById("welcome");
-    
-    if (username != "" && password.value != "") {
-        text = welcome.textContent + ", " + username;
-        typewriter(welcome, text);
+  const username = document.querySelector("#username").value;
+  const password = document.querySelector("#password").value;
+  
+  localStorage.setItem("user_name", username);
+  
+  const response = await fetch(`api/auth/login`, {
+    method: 'POST',
+    body: JSON.stringify({ username: username, password: password }),
+    headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+  
+  let welcome = document.getElementById("welcome");
+  
+  if (username != "" && password.value != "") {
+    if (response.ok) {
+      text = "welcome to whisper, " + username;
+      typewriter(welcome, text);
+      document.body.classList.add('fade-out'); 
+      setTimeout(() => window.location.href = "upload.html", 1000)
+    } else {
+      text = "your username or password is incorrect";
+      typewriter(welcome, text, 4);
     }
   }
+}
 
-  async function loginUser() {
-    loginOrCreate(`/api/auth/login`);
-  }
-
-  function logout() {
-    localStorage.removeItem('user_name');
-    fetch(`/api/auth/logout`, {
-      method: 'delete',
-    }).then(() => (window.location.href = '/'));
-  }
+function logout() {
+  localStorage.removeItem('user_name');
+  fetch(`/api/auth/logout`, {
+    method: 'delete',
+  }).then(() => (window.location.href = '/'));
+}
