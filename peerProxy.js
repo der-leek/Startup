@@ -31,9 +31,24 @@ function peerProxy(httpServer) {
     currentConnection = newConnection;
 
     // Handle message forwarding
-    ws.on('message', (data) => {
-      if (currentConnection) {
-        currentConnection.ws.send(data);
+    // ws.on('message', (data) => {
+    //   if (currentConnection) {
+    //     currentConnection.ws.send(data);
+    //   }
+    // });
+
+    ws.on('message', (message) => {
+      if (message === 'get_transcript') {
+        // Read the contents of the output.txt file
+        fs.readFile('output.txt', 'utf8', (err, data) => {
+          if (err) {
+            console.error('Error reading output.txt:', err);
+            return;
+          }
+  
+          // Send the transcript text back to the client over the WebSocket connection
+          ws.send(data);
+        });
       }
     });
 

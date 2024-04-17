@@ -1,7 +1,8 @@
 let socket = null;
 
 function createWebSocketConnection() {
-  socket = new WebSocket('ws://localhost:4000'); // Replace with your server URL
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 }
 
 function handleWebSocketEvents() {
@@ -52,11 +53,12 @@ window.onload = () => {
     document.querySelector('#username').innerHTML = localStorage.getItem('user_name');
     let output_text_element = document.querySelector('#output');
     let output_content = 'transcribing...';
-    
-    output_text_element.textContent = "";
     setTimeout(() => typewriter(output_text_element, output_content, 0), 500) 
+ 
     setupLogoutButton();
     initWebSocket();
+
+    // displayTranscript(sendTranscriptOverWebSocket());
 };
 
 function chuckNorris() {
@@ -71,30 +73,22 @@ function chuckNorris() {
 }
 
 function sendTranscriptOverWebSocket() {
-  fetch('/api/downloads/output.txt')
-    .then((response) => {
-      if (response.ok) {
-        return response.text(); // Get the file contents as text
-      } else {
-        throw new Error('Error downloading file');
-      }
-    })
-    .then((transcriptText) => {
-      if (socket) {
-        socket.send(transcriptText);
-      } else {
-        console.error('WebSocket connection not established');
-      }
-    })
-    .catch((error) => {
-      console.error('Error downloading file:', error);
-      displayErrorMessage('Error downloading transcript file');
-    });
+    // No need to fetch the output.txt file on the client-side
+    // The server should send the contents of output.txt over the WebSocket
+  
+    // Check if the WebSocket connection is established
+    if (socket) {
+      // Send a request to the server to get the contents of output.txt
+      socket.send('get_transcript');
+    } else {
+      console.error('WebSocket connection not established');
+    }
 }
-
-function displayTranscript(transcript) {
-  const outputPlaceholder = document.getElementById('output_placeholder');
-  outputPlaceholder.textContent = transcript;
+  
+function displayTranscript(transcriptText) {
+    // Update the DOM with the received transcript text
+    const outputPlaceholder = document.getElementById('output');
+    outputPlaceholder.textContent = transcriptText;
 }
 
 function save() {
