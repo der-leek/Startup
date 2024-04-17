@@ -1,16 +1,100 @@
-function typewriter(element, text, index=18) {
-    if (index < text.length) {
-        element.innerHTML = text.slice(0, index);
-        index++;
-        
-        let random_delay = Math.random() + .15*text.length; // Base delay
-        if (Math.random() < 0.1) { // 10% chance of a pause
-            random_delay += Math.random() * 250; // Add up to 0.25 seconds extra
-        }
-        setTimeout(() => typewriter(element, text, index), random_delay);
-    } else {
-        element.innerHTML = text.slice(0, index);
-    }
+let socket = null;
+
+function createWebSocketConnection() {
+  socket = new WebSocket('ws://localhost:4000'); // Replace with your server URL
+}
+
+function handleWebSocketEvents() {
+  socket.onopen = () => {
+    console.log('WebSocket connection established');
+  };
+
+  socket.onmessage = (event) => {
+    // Handle message received from the server
+    const transcript = event.data;
+    displayTranscript(transcript);
+  };
+
+  socket.onclose = () => {
+    console.log('WebSocket connection closed');
+    socket = null;
+    handleWebSocketReconnection();
+  };
+
+  socket.onerror = (error) => {
+    console.error('WebSocket error:', error);
+    displayWebSocketErrorMessage();
+  };
+}
+
+function handleWebSocketReconnection() {
+  // Try to re-establish the WebSocket connection after a delay
+  setTimeout(createWebSocketConnection, 5000);
+}
+
+function displayWebSocketErrorMessage() {
+    const errorMessage = 'Unable to establish WebSocket connection. Please try again later.';
+    displayErrorMessage(errorMessage);
+}
+  
+function displayErrorMessage(message) {
+    const errorElement = document.getElementById('error-message');
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+}
+
+function initWebSocket() {
+    createWebSocketConnection();
+    handleWebSocketEvents();
+}
+
+window.onload = () => {
+    document.querySelector('#username').innerHTML = localStorage.getItem('user_name');
+    let output_text_element = document.querySelector('#output');
+    let output_content = 'transcribing...';
+    
+    output_text_element.textContent = "";
+    setTimeout(() => typewriter(output_text_element, output_content, 0), 500) 
+    setupLogoutButton();
+    initWebSocket();
+};
+
+function chuckNorris() {
+    fetch('https://api.chucknorris.io/jokes/random?category=dev')
+        .then(response => response.json())
+        .then(data => {
+            if (data.value) output_content = data.value;
+        })
+        .catch(error => {
+            console.error('Error fetching joke:', error);
+        });
+}
+
+function sendTranscriptOverWebSocket() {
+  fetch('/api/downloads/output.txt')
+    .then((response) => {
+      if (response.ok) {
+        return response.text(); // Get the file contents as text
+      } else {
+        throw new Error('Error downloading file');
+      }
+    })
+    .then((transcriptText) => {
+      if (socket) {
+        socket.send(transcriptText);
+      } else {
+        console.error('WebSocket connection not established');
+      }
+    })
+    .catch((error) => {
+      console.error('Error downloading file:', error);
+      displayErrorMessage('Error downloading transcript file');
+    });
+}
+
+function displayTranscript(transcript) {
+  const outputPlaceholder = document.getElementById('output_placeholder');
+  outputPlaceholder.textContent = transcript;
 }
 
 function save() {
@@ -38,32 +122,40 @@ function save() {
     });
 }
 
-window.onload = () => {
-    document.querySelector('#username').innerHTML = localStorage.getItem('user_name');
-    let output_text_element = document.querySelector('#output_placeholder');
-    let output_content = output_text_element.textContent;
-    fetch('https://api.chucknorris.io/jokes/random?category=dev')
-        .then(response => response.json())
-        .then(data => {
-            if (data.value) output_content = data.value;
-        })
-        .catch(error => {
-            console.error('Error fetching joke:', error);
-        });
-    
-    output_text_element.textContent = "";
-    setTimeout(() => typewriter(output_text_element, output_content), 250) 
 
-    let login_logout = document.querySelector('#login_logout');
-    login_logout.innerHTML = '<a>logout</a>';
-    login_logout.addEventListener('click', logout);
-    login_logout.style.cursor = 'pointer';
-    login_logout.style.color = 'rgb(220, 220, 220)';
+function setupLogoutButton() {
+  let login_logout = document.querySelector('#login_logout');
+  login_logout.innerHTML = '<a>logout</a>';
+  login_logout.addEventListener('click', logout);
+  login_logout.style.cursor = 'pointer';
+  login_logout.style.color = 'rgb(220, 220, 220)';
 }
 
 function logout() {
-    localStorage.removeItem('user_name');
-    fetch(`/api/auth/logout`, {
-      method: 'DELETE',
-    }).then(() => (window.location.href = '/'));
-  }
+  localStorage.removeItem('user_name');
+  fetch(`/api/auth/logout`, {
+    method: 'DELETE',
+  }).then(() => {
+    // Close the WebSocket connection
+    if (socket) {
+      socket.close();
+    }
+    window.location.href = '/';
+  });
+}
+
+
+function typewriter(element, text, index=18) {
+    if (index < text.length) {
+        element.innerHTML = text.slice(0, index);
+        index++;
+        
+        let random_delay = Math.random() + .15*text.length; // Base delay
+        if (Math.random() < 0.1) { // 10% chance of a pause
+            random_delay += Math.random() * 250; // Add up to 0.25 seconds extra
+        }
+        setTimeout(() => typewriter(element, text, index), random_delay);
+    } else {
+        element.innerHTML = text.slice(0, index);
+    }
+}

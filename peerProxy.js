@@ -1,59 +1,67 @@
 const { WebSocketServer } = require('ws');
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 function peerProxy(httpServer) {
-  // Create a websocket object
+  // Create a WebSocket server
   const wss = new WebSocketServer({ noServer: true });
 
   // Handle the protocol upgrade from HTTP to WebSocket
   httpServer.on('upgrade', (request, socket, head) => {
-    wss.handleUpgrade(request, socket, head, function done(ws) {
+    wss.handleUpgrade(request, socket, head, (ws) => {
       wss.emit('connection', ws, request);
     });
   });
 
-  // Keep track of all the connections so we can forward messages
-  let connections = [];
+  // Store the current connection
+  let currentConnection = null;
 
+  // Handle WebSocket connection
   wss.on('connection', (ws) => {
-    const connection = { id: uuid.v4(), alive: true, ws: ws };
-    connections.push(connection);
+    // If there's an existing connection, terminate it
+    if (currentConnection) {
+      currentConnection.ws.terminate();
+    }
 
-    // Forward messages to everyone except the sender
-    ws.on('message', function message(data) {
-      connections.forEach((c) => {
-        if (c.id !== connection.id) {
-          c.ws.send(data);
-        }
-      });
-    });
+    // Create a new connection
+    const newConnection = {
+      id: uuidv4(),
+      alive: true,
+      ws: ws,
+    };
+    currentConnection = newConnection;
 
-    // Remove the closed connection so we don't try to forward anymore
-    ws.on('close', () => {
-      const pos = connections.findIndex((o, i) => o.id === connection.id);
-
-      if (pos >= 0) {
-        connections.splice(pos, 1);
+    // Handle message forwarding
+    ws.on('message', (data) => {
+      if (currentConnection) {
+        currentConnection.ws.send(data);
       }
     });
 
-    // Respond to pong messages by marking the connection alive
+    // Handle connection close
+    ws.on('close', () => {
+      currentConnection = null;
+    });
+
+    // Handle pong messages
     ws.on('pong', () => {
-      connection.alive = true;
+      if (currentConnection) {
+        currentConnection.alive = true;
+      }
     });
   });
 
-  // Keep active connections alive
+  // Keep the active connection alive
   setInterval(() => {
-    connections.forEach((c) => {
-      // Kill any connection that didn't respond to the ping last time
-      if (!c.alive) {
-        c.ws.terminate();
+    if (currentConnection) {
+      // Terminate the connection if it didn't respond to the ping last time
+      if (!currentConnection.alive) {
+        currentConnection.ws.terminate();
+        currentConnection = null;
       } else {
-        c.alive = false;
-        c.ws.ping();
+        currentConnection.alive = false;
+        currentConnection.ws.ping();
       }
-    });
+    }
   }, 10000);
 }
 
