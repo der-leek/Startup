@@ -28,43 +28,6 @@ app.use(cors());
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// Configure the fileUpload middleware
-const upload = multer({
-    storage: multer.diskStorage({
-      destination: __dirname + '/uploads/',
-      filename: (req, file, cb) => {
-        cb(null, file.originalname);
-      },
-    }),
-  });
-  
-app.post('/uploads', upload.single('file'), (req, res) => {
-  if (req.file) {
-    res.send({
-      message: 'Uploaded succeeded',
-      file: req.file.filename,
-    });
-  } else {
-    res.status(400).send({ message: 'Upload failed' });
-  }
-});
-
-app.get('/file/:filename', (req, res) => {
-  res.sendFile(__dirname + '/uploads/${req.params.filename}');
-});
-
-app.use((err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    res.status(413).send({ message: err.message });
-  } else {
-    res.status(500).send({ message: err.message });
-  }
-});
-
-app.get('/downloads/:filename', (req, res) => {
-  res.download(path.join(__dirname, 'downloads', req.params.filename));
-});
-
 // CreateAuth token for a new user
 apiRouter.post('/auth/create', async (req, res) => {
   if (await DB.getUser(req.body.username)) {
@@ -118,6 +81,43 @@ apiRouter.get('/user/:username', async (req, res) => {
 // secureApiRouter verifies credentials for endpoints
 var secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);
+
+// Configure the fileUpload middleware
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: __dirname + '/uploads/',
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  }),
+});
+
+secureApiRouter.post('/uploads', upload.single('file'), (req, res) => {
+if (req.file) {
+  res.send({
+    message: 'Uploaded succeeded',
+    file: req.file.filename,
+  });
+} else {
+  res.status(400).send({ message: 'Upload failed' });
+}
+});
+
+secureApiRouter.get('/file/:filename', (req, res) => {
+res.sendFile(__dirname + '/uploads/${req.params.filename}');
+});
+
+secureApiRouter.use((err, req, res, next) => {
+if (err instanceof multer.MulterError) {
+  res.status(413).send({ message: err.message });
+} else {
+  res.status(500).send({ message: err.message });
+}
+});
+
+secureApiRouter.get('/downloads/:filename', (req, res) => {
+res.download(path.join(__dirname, 'downloads', req.params.filename));
+});
 
 secureApiRouter.use(async (req, res, next) => {
   authToken = req.cookies[authCookieName];
