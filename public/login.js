@@ -37,9 +37,7 @@ async function login() {
       document.body.classList.add('fade-out'); 
       setTimeout(() => window.location.href = "upload.html", 1000)
     } else {
-      text = await response.json().then(data => {
-        return data.msg;
-      });
+      text = "your username or password is incorrect";
       typewriter(welcome, text, 4);
     }
   }
@@ -48,6 +46,6 @@ async function login() {
 function logout() {
   localStorage.removeItem('user_name');
   fetch(`/api/auth/logout`, {
-    method: 'DELETE',
+    method: 'delete',
   }).then(() => (window.location.href = '/'));
 }

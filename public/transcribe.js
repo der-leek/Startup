@@ -14,7 +14,7 @@ function typewriter(element, text, index=18) {
 }
 
 function save() {
-    fetch('api/downloads/output.txt')
+    fetch('/downloads/output.txt')
         .then(response => {
             if (response.ok) {
                 return response.blob(); // Get the file as a blob

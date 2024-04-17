@@ -3,8 +3,6 @@ window.onload = () => {
 };
 
 async function upload_file(file_input) {
-    
-    
     const file = file_input.files[0];
 
     if (!file) {
@@ -15,7 +13,7 @@ async function upload_file(file_input) {
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await fetch('/api/uploads', {
+    const response = await fetch('/uploads', {
         method: 'POST',
         body: formData,
     });
@@ -27,3 +25,17 @@ async function upload_file(file_input) {
     }
     
 }
+
+// function next() {
+//     // if a file is selected
+//         // call whisper.cpp
+//         // move to transcribe
+//     // else output error message
+// }
+
+// Check if the file is an audio file
+    //   const allowedTypes = ['audio/mpeg', 'audio/mp4', 'audio/mpeg', 'audio/mpga', 'audio/m4a', 'audio/wav', 'audio/webm'];
+    //   if (!allowedTypes.includes(file.type)) {
+    //     console.error('Invalid file type. Please select an audio file.');
+    //     return;
+    //   }
