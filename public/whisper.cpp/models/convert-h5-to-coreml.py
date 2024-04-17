@@ -9,7 +9,7 @@ from whisper import load_model
 
 from copy import deepcopy
 import torch
-from transformers import WhisperForConditionalGeneration
+from ane import WhisperForConditionalGeneration
 from huggingface_hub import metadata_update
 
 # https://github.com/bayartsogt-ya/whisper-multiple-hf-datasets/blob/main/src/multiple_datasets/hub_default_utils.py

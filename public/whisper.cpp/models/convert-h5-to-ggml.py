@@ -25,7 +25,7 @@ import torch
 import numpy as np
 from pathlib import Path
 
-from transformers import WhisperForConditionalGeneration
+from ane import WhisperForConditionalGeneration
 
 conv_map = {
         'self_attn.k_proj'              : 'attn.key',

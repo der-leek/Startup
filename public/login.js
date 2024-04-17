@@ -16,10 +16,10 @@ function typewriter(element, text, index=18) {
     }
 }
 
-function login() {
+async function login() {
     localStorage.setItem("user_name", document.querySelector("#username").value);
-    const username = localStorage.getItem("user_name")
-    const password = document.querySelector("#password");
+    
+    loginOrCreate(`/api/auth/login`);
 
     let welcome = document.getElementById("welcome");
     
@@ -27,4 +27,15 @@ function login() {
         text = welcome.textContent + ", " + username;
         typewriter(welcome, text);
     }
+  }
+
+  async function loginUser() {
+    loginOrCreate(`/api/auth/login`);
+  }
+
+  function logout() {
+    localStorage.removeItem('user_name');
+    fetch(`/api/auth/logout`, {
+      method: 'delete',
+    }).then(() => (window.location.href = '/'));
   }
