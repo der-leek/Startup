@@ -1,5 +1,6 @@
 const { WebSocketServer } = require('ws');
 const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
 
 function peerProxy(httpServer) {
   // Create a WebSocket server
@@ -38,9 +39,10 @@ function peerProxy(httpServer) {
     // });
 
     ws.on('message', (message) => {
+      message = Buffer.from(message).toString('utf8');
       if (message === 'get_transcript') {
         // Read the contents of the output.txt file
-        fs.readFile('output.txt', 'utf8', (err, data) => {
+        fs.readFile('./downloads/output.txt', 'utf8', (err, data) => {
           if (err) {
             console.error('Error reading output.txt:', err);
             return;

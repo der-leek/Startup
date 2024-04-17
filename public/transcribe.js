@@ -8,6 +8,7 @@ function createWebSocketConnection() {
 function handleWebSocketEvents() {
   socket.onopen = () => {
     console.log('WebSocket connection established');
+    sendTranscriptOverWebSocket();
   };
 
   socket.onmessage = (event) => {
@@ -44,6 +45,23 @@ function displayErrorMessage(message) {
     errorElement.style.display = 'block';
 }
 
+function sendTranscriptOverWebSocket() {
+    // Check if the WebSocket connection is established
+    if (socket) {
+      // Send a request to the server to get the contents of output.txt
+      socket.send('get_transcript');
+    } else {
+      console.error('WebSocket connection not established');
+    }
+}
+  
+function displayTranscript(transcriptText) {
+    // Update the DOM with the received transcript text
+    const output = document.getElementById('output');
+    let output_content = transcriptText;
+    setTimeout(() => typewriter(output, output_content, 0), 500) 
+}
+
 function initWebSocket() {
     createWebSocketConnection();
     handleWebSocketEvents();
@@ -57,39 +75,8 @@ window.onload = () => {
  
     setupLogoutButton();
     initWebSocket();
-
-    // displayTranscript(sendTranscriptOverWebSocket());
 };
 
-function chuckNorris() {
-    fetch('https://api.chucknorris.io/jokes/random?category=dev')
-        .then(response => response.json())
-        .then(data => {
-            if (data.value) output_content = data.value;
-        })
-        .catch(error => {
-            console.error('Error fetching joke:', error);
-        });
-}
-
-function sendTranscriptOverWebSocket() {
-    // No need to fetch the output.txt file on the client-side
-    // The server should send the contents of output.txt over the WebSocket
-  
-    // Check if the WebSocket connection is established
-    if (socket) {
-      // Send a request to the server to get the contents of output.txt
-      socket.send('get_transcript');
-    } else {
-      console.error('WebSocket connection not established');
-    }
-}
-  
-function displayTranscript(transcriptText) {
-    // Update the DOM with the received transcript text
-    const outputPlaceholder = document.getElementById('output');
-    outputPlaceholder.textContent = transcriptText;
-}
 
 function save() {
     fetch('/api/downloads/output.txt')
@@ -116,7 +103,6 @@ function save() {
     });
 }
 
-
 function setupLogoutButton() {
   let login_logout = document.querySelector('#login_logout');
   login_logout.innerHTML = '<a>logout</a>';
@@ -138,7 +124,6 @@ function logout() {
   });
 }
 
-
 function typewriter(element, text, index=18) {
     if (index < text.length) {
         element.innerHTML = text.slice(0, index);
@@ -152,4 +137,15 @@ function typewriter(element, text, index=18) {
     } else {
         element.innerHTML = text.slice(0, index);
     }
+}
+
+function chuckNorris() {
+    fetch('https://api.chucknorris.io/jokes/random?category=dev')
+        .then(response => response.json())
+        .then(data => {
+            if (data.value) output_content = data.value;
+        })
+        .catch(error => {
+            console.error('Error fetching joke:', error);
+        });
 }
