@@ -95,7 +95,7 @@ main {
 }
 
 .custom_button:hover {
-    color: white;
+    color: pink;
 }
 
 #submit_credentials {
@@ -126,7 +126,7 @@ a:visited {
 }
 
 a:hover {
-    color: white;
+    color: pink;
 }
 
 .fade-out {
