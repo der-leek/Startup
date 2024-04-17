@@ -1,4 +1,4 @@
-const port = process.argv.length > 2 ? process.argv[2] : 3000;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 const express = require('express');
 const multer = require('multer');
@@ -46,19 +46,24 @@ apiRouter.post('/auth/create', async (req, res) => {
 
 // GetAuth token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await DB.getUser(req.body.username);
-  if (user) {
-    if (await bcrypt.compare(req.body.password, user.password)) {
-      setAuthCookie(res, user.token);
-      res.send({ id: user._id });
-      return;
-    } else {
-      res.status(401).send({ msg: 'your username or password is incorrect' });
-      return;
+  try {
+    const user = await DB.getUser(req.body.username);
+    if (user) {
+      if (await bcrypt.compare(req.body.password, user.password)) {
+          setAuthCookie(res, user.token);
+          res.send({ id: user._id });
+          return;
+      } else {
+          res.status(401).send({ msg: 'your username or password is incorrect' });
+          return;
+      }
     }
+    res.status(401).send({ msg: 'you must first join whisper to use it' });
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ msg: 'Internal error' });
   }
-  res.status(401).send({ msg: 'you must first join whisper to use it' });
-  return;
 });
 
 // DeleteAuth token if stored in cookie
