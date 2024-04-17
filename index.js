@@ -89,9 +89,13 @@ apiRouter.post('/auth/login', async (req, res) => {
       setAuthCookie(res, user.token);
       res.send({ id: user._id });
       return;
+    } else {
+      res.status(401).send({ msg: 'your username or password is incorrect' });
+      return;
     }
   }
-  res.status(401).send({ msg: 'Unauthorized' });
+  res.status(401).send({ msg: 'you must first join whisper to use it' });
+  return;
 });
 
 // DeleteAuth token if stored in cookie

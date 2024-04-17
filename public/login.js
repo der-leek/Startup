@@ -18,9 +18,7 @@ async function login() {
   const username = document.querySelector("#username").value;
   const password = document.querySelector("#password").value;
   
-  localStorage.setItem("user_name", username);
-  
-  const response = await fetch(`api/auth/login`, {
+  const response = await fetch('/api/auth/login', {
     method: 'POST',
     body: JSON.stringify({ username: username, password: password }),
     headers: {
@@ -32,12 +30,15 @@ async function login() {
   
   if (username != "" && password.value != "") {
     if (response.ok) {
+      localStorage.setItem("user_name", username);
       text = "welcome to whisper, " + username;
       typewriter(welcome, text);
       document.body.classList.add('fade-out'); 
       setTimeout(() => window.location.href = "upload.html", 1000)
     } else {
-      text = "your username or password is incorrect";
+      text = await response.json().then(data => {
+        return data.msg;
+      });
       typewriter(welcome, text, 4);
     }
   }
@@ -46,6 +47,6 @@ async function login() {
 function logout() {
   localStorage.removeItem('user_name');
   fetch(`/api/auth/logout`, {
-    method: 'delete',
+    method: 'DELETE',
   }).then(() => (window.location.href = '/'));
 }
