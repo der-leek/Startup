@@ -81,7 +81,8 @@ async function loginOrCreate(endpoint) {
         typewriter(response, response.textContent);
         throw new Error('User already exists');
     } else { // if the user is created successfully
-        localStorage.setItem('username', username);
+        localStorage.setItem('user_name', username);
+
         let [response, parent_element] = message('welcome to whisper, ' + username);
         parent_element.appendChild(response);    
 
@@ -89,23 +90,7 @@ async function loginOrCreate(endpoint) {
         let button = document.getElementById('submit_credentials');
         button.remove();
         typewriter(response, response.textContent);
+        setTimeout(() => document.body.classList.add('fade-out'), 1500); 
+        setTimeout(() => window.location.href = "upload.html", 3000);
     };
 }
-
-// function new_user() {
-//     [user_email, username, user_password, confirmation] = validate_fields();
-    
-//     const test = localStorage.getItem('user_credentials');
-//     if (test === null) {
-//         let user_credentials = new Map();
-//         user_credentials.set(username, { email: user_email, password: user_password});
-    
-//         const serialized_credentials = JSON.stringify(Array.from(user_credentials.entries()));
-//         localStorage.setItem('user_credentials', serialized_credentials);
-//     } else {
-//         let deserialized_credentials = new Map(JSON.parse(test));
-//         deserialized_credentials.set(username, { email: user_email, password: user_password});
-//         const serialized_credentials = JSON.stringify(Array.from(deserialized_credentials.entries()));
-//         localStorage.setItem('user_credentials', serialized_credentials);
-//     }
-// }
