@@ -51,10 +51,7 @@ main {
 }
 
 #username { 
-    /* fix this so it aligns in the top left corner for desktop, right under github for mobile */
-    padding-left: 7.5%;
     font-size: 1.25em;
-    margin-right: auto;
     font-weight: bold;
 }
 
