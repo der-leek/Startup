@@ -79,3 +79,17 @@ MongoDB now stores the user credentials for my service
 - **Existing user** - Only existing users can log in and use the service. Error messages display if passwords don't match or if the user does not exist when trying to authenticate.
 - **Use MongoDB to store credentials** - Stores the user's name, email, and password.
 - **Restricts functionality** - Only authenticated users can proceed past the login page. Upload/download endpoints do not function if there is no authentication.
+
+## WebSocket deliverable
+With this deliverable, I modified my service so that transcription requests and replies were sent over WebSocket
+
+It doesn't work very quickly, because my server's not super powerful, but THE TRANSCRIPTION WORKS!!! I made sure to delete all user files as soon as the server is finished with them to preserve user privacy
+
+Also, I added an easter egg where a Chuck Norris joke (3rd party endpoint) animates on the screen if the output text is clicked. 
+
+I feel very challenged by, humbled by, and proud of this project.
+
+- **Backend listens for WebSocket connection** - my server listens for requests to transcribe uploaded files
+- **Frontend makes WebSocket connection** - the frontend makes a websocket connection when the transcribe page is loaded
+- **Data sent over WebSocket connection** - transcribed text is sent over websocket!
+- **WebSocket data displayed** - the transcribed text types itself out onto the screen
