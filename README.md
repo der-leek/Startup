@@ -8,7 +8,7 @@ Whisper.txt allows you to focus on what is most important by accurately and effo
 Stop transcribing. Start whispering.
 
 ### Design
-![](whisper_mock_UI.jpg)
+![](Service/whisper_mock_UI.jpg)
 
 ### Key Features
 - Secure login over HTTPS
