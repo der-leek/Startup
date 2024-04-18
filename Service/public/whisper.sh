@@ -1,1 +1,0 @@
-./main -m whisper.cpp/models/ggml-base.bin -f audio.wav -otxt -of output
