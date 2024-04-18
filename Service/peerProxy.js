@@ -75,7 +75,7 @@ async function processAudio(ws) {
   const downloadFile = `${downloadPath}/output.txt`;
   read_output_file(downloadFile, ws);
 
-  const deleteScript = './delete.sh';
+  const deleteScript = './clear_uploads.sh';
   await runBashScript(deleteScript);
 }
 
