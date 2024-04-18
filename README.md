@@ -87,7 +87,7 @@ It doesn't work very quickly, because my server's not super powerful, but THE TR
 
 Also, I added an easter egg where a Chuck Norris joke (3rd party endpoint) animates on the screen if the output text is clicked. 
 
-I feel very challenged by, humbled by, and proud of this project.
+This project has humbled and challenged me.
 
 - **Backend listens for WebSocket connection** - my server listens for requests to transcribe uploaded files
 - **Frontend makes WebSocket connection** - the frontend makes a websocket connection when the transcribe page is loaded
