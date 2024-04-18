@@ -75,7 +75,7 @@ async function processAudio(ws) {
   await runBashScript('./transcribe.sh');
   const downloadPath = './downloads';
   const downloadFile = `${downloadPath}/output.txt`;
-  read_output_file(downloadFile, ws);
+  await read_output_file(downloadFile, ws);
 
   const deleteScript = './clear_uploads.sh';
   await runBashScript(deleteScript);
