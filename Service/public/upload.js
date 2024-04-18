@@ -11,6 +11,10 @@ window.onload = () => {
 async function upload_file(file_input) {
     const file = file_input.files[0];
 
+    const uploading = document.getElementById('drop_button');
+    uploading.textContent = 'uploading file...';
+    typewriter(uploading, uploading.textContent);
+
     if (!file) {
     console.error('No file selected');
     return;
@@ -25,7 +29,10 @@ async function upload_file(file_input) {
     });
 
     if (response.ok) {
-        console.log('File uploaded successfully');
+        const successMessage = 'file uploaded successfully';
+        console.log(successMessage);
+        uploading.textContent = successMessage;
+        setTimeout(() => typewriter(uploading, successMessage), 1500);
     } else {
         console.error('File upload failed');
     }
@@ -38,16 +45,26 @@ function logout() {
       method: 'DELETE',
     }).then(() => (window.location.href = '/'));
   }
-// function next() {
-//     // if a file is selected
-//         // call whisper.cpp
-//         // move to transcribe
-//     // else output error message
-// }
 
-// Check if the file is an audio file
-    //   const allowedTypes = ['audio/mpeg', 'audio/mp4', 'audio/mpeg', 'audio/mpga', 'audio/m4a', 'audio/wav', 'audio/webm'];
-    //   if (!allowedTypes.includes(file.type)) {
-    //     console.error('Invalid file type. Please select an audio file.');
-    //     return;
-    //   }
+
+function message(text) {
+    const message = document.createElement('p');
+    message.textContent = text;
+
+    return message;
+}
+
+function typewriter(element, text, index=0) {    
+    if (index < text.length) {
+        element.innerHTML = text.slice(0, index);
+        index++;
+        
+        let random_delay = Math.random() + .8 * text.length; // Base delay
+        if (Math.random() < 0.5) { // 10% chance of a pause
+            random_delay += Math.random() * 250; // Add up to 0.25 seconds extra
+        }
+        setTimeout(() => typewriter(element, text, index), random_delay);
+    } else {
+        element.innerHTML = text.slice(0, index);
+    }
+}
