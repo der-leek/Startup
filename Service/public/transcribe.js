@@ -72,11 +72,12 @@ window.onload = () => {
     let output_text_element = document.querySelector('#output');
     let output_content = 'transcribing...';
     setTimeout(() => typewriter(output_text_element, output_content, 0), 500) 
- 
+    output_text_element.addEventListener("click", () => {
+      chuckNorris(output_text_element, output_content);
+    });
     setupLogoutButton();
     initWebSocket();
-  };
-  
+};  
   
 function save() {
   fetch('/api/downloads/output.txt')
@@ -147,11 +148,12 @@ function typewriter(element, text, index=18) {
     }
 }
 
-function chuckNorris() {
+function chuckNorris(output_text_element, output_content) {
     fetch('https://api.chucknorris.io/jokes/random?category=dev')
         .then(response => response.json())
         .then(data => {
-            if (data.value) output_content = data.value;
+            output_content = data.value;
+            typewriter(output_text_element, output_content, 0);
         })
         .catch(error => {
             console.error('Error fetching joke:', error);
