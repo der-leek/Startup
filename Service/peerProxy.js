@@ -1,6 +1,7 @@
 const { WebSocketServer } = require('ws');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
+const { exec } = require('child_process');
 
 function peerProxy(httpServer) {
   // Create a WebSocket server
@@ -31,26 +32,45 @@ function peerProxy(httpServer) {
     };
     currentConnection = newConnection;
 
-    // Handle message forwarding
-    // ws.on('message', (data) => {
-    //   if (currentConnection) {
-    //     currentConnection.ws.send(data);
-    //   }
-    // });
-
     ws.on('message', (message) => {
       message = Buffer.from(message).toString('utf8');
       if (message === 'get_transcript') {
-        // Read the contents of the output.txt file
-        fs.readFile('./downloads/output.txt', 'utf8', (err, data) => {
-          if (err) {
-            console.error('Error reading output.txt:', err);
+        
+
+        const audioFile = fs.readdirSync('./uploads')[0];
+
+        const scriptPath = './whisper.sh';
+        
+        exec(scriptPath, (error, stdout, stderr) => {
+          if (error) {
+            console.error('Error running script:', error);
             return;
           }
-  
-          // Send the transcript text back to the client over the WebSocket connection
-          ws.send(data);
+        
+          // console.log('stdout:', stdout);
+          // console.log('stderr:', stderr);
         });
+
+        const downloadPath = './downloads';
+        const downloadFile = `${downloadPath}/output.txt`;
+
+        fs.watch(downloadPath, (eventType, filename) => {
+          if (eventType === 'rename') { // Check for file creation (rename event)
+            console.log(`File created: ${filename}`);
+            
+            // Read the contents of the output.txt file
+            fs.readFile(downloadFile, 'utf8', (err, data) => {
+              if (err) {
+                console.error('Error reading output.txt:', err);
+                return;
+              }
+
+            // Send the transcript text back to the client over the WebSocket connection
+            ws.send(data);
+          });
+          }
+        });
+        
       }
     });
 
