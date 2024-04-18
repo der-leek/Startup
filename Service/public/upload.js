@@ -34,7 +34,10 @@ async function upload_file(file_input) {
         uploading.textContent = successMessage;
         setTimeout(() => typewriter(uploading, successMessage), 1500);
     } else {
+        const failureMessage = 'file upload failed';
         console.error('File upload failed');
+        uploading.textContent = failureMessage;
+        setTimeout(() => typewriter(uploading, failureMessage), 1500);
     }
     
 }
