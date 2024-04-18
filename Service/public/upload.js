@@ -63,7 +63,7 @@ function typewriter(element, text, index=0) {
         index++;
         
         let random_delay = Math.random() + .8 * text.length; // Base delay
-        if (Math.random() < 0.5) { // 10% chance of a pause
+        if (Math.random() < 0.1) { // 10% chance of a pause
             random_delay += Math.random() * 250; // Add up to 0.25 seconds extra
         }
         setTimeout(() => typewriter(element, text, index), random_delay);
