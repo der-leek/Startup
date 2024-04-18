@@ -35,25 +35,7 @@ function peerProxy(httpServer) {
     ws.on('message', (message) => {
       message = Buffer.from(message).toString('utf8');
       if (message === 'get_transcript') {
-
-        const audioFile = './uploads/output.wav';
-        const transcribeScript = './whisper.sh';
-        
-        run_bash(transcribeScript);
-
-        const downloadPath = './downloads';
-        const downloadFile = `${downloadPath}/output.txt`;
-
-        // Send transcription to user once output.txt is created
-        fs.watch(downloadPath, (eventType, filename) => {
-          if (eventType === 'rename') { // Check for file creation (rename event)
-            console.log(`File created: ${filename}`);
-            read_output_file(downloadFile, ws);
-            const deleteScript = './delete.sh';
-            run_bash(deleteScript);
-          }
-        });
-        
+        processAudio(ws);
       }
     });
 
@@ -85,23 +67,37 @@ function peerProxy(httpServer) {
   }, 10000);
 }
 
-function run_bash(scriptPath) {
-  exec(scriptPath, (error, stdout, stderr) => {
-    if (error) {
-      console.error('Error running script:', error);
-      return;
-    }
+async function processAudio(ws) {
+  // Send transcription to user once output.txt is created
+  await runBashScript('./convert.sh');
+  await runBashScript('./transcribe.sh');
+  const downloadPath = './downloads';
+  const downloadFile = `${downloadPath}/output.txt`;
+  read_output_file(downloadFile, ws);
+
+  const deleteScript = './delete.sh';
+  await runBashScript(deleteScript);
+}
+
+async function runBashScript(scriptPath) {
+  return new Promise((resolve, reject) => {
+    exec(scriptPath, (error, stdout, stderr) => {
+      if (error) {
+        reject(error); // Reject the promise with the error
+        return;
+      }
+      resolve({ stdout, stderr });
+    });
   });
 }
 
-function read_output_file(downloadFile, ws) {
+async function read_output_file(downloadFile, ws) {
   // Read the contents of the output.txt file
-  fs.readFile(downloadFile, 'utf8', (err, data) => {
+  await fs.readFile(downloadFile, 'utf8', (err, data) => {
     if (err) {
       console.error('Error reading output.txt:', err);
       return;
     }
-
     // Send the transcript text back to the client over the WebSocket connection
     ws.send(data);
   });
