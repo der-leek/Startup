@@ -36,6 +36,8 @@ function peerProxy(httpServer) {
       message = Buffer.from(message).toString('utf8');
       if (message === 'get_transcript') {
         processAudio(ws);
+      } else if (message === 'delete_transcript') {
+        runBashScript('./clear_downloads.sh');
       }
     });
 

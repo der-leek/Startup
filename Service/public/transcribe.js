@@ -75,32 +75,40 @@ window.onload = () => {
  
     setupLogoutButton();
     initWebSocket();
-};
-
-
+  };
+  
+  
 function save() {
-    fetch('/api/downloads/output.txt')
-        .then(response => {
-            if (response.ok) {
-                return response.blob(); // Get the file as a blob
-            } else {
-                throw new Error('Error downloading file');
-            }
-            })
-        .then(blob => {
-            // Create a temporary link to initiate the download
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'output.txt'; // Set the desired file name
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            })
-        .catch(error => {
-            console.error('Error downloading file:', error);
-    });
+  fetch('/api/downloads/output.txt')
+      .then(response => {
+          if (response.ok) {
+              return response.blob(); // Get the file as a blob
+          } else {
+              throw new Error('Error downloading file');
+          }
+          })
+      .then(blob => {
+          // Create a temporary link to initiate the download
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'output.txt'; // Set the desired file name
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+          })
+      .then(() => {
+        if (socket) {
+          // Send a request to the server to get the contents of output.txt
+          socket.send('delete_transcript');
+        } else {
+          console.error('WebSocket connection not established');
+        }
+      })
+      .catch(error => {
+          console.error('Error downloading file:', error);
+  });  
 }
 
 function setupLogoutButton() {
