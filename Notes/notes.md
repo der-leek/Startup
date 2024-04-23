@@ -7690,3 +7690,161 @@ Then open the resulting project found in the `testpwa` directory and modify `ind
 Workbox is an NPM package created by Google for using services workers. The template PWA created `create-react-app`, and the Simon demonstration project, both use workbox to simplify some of the registration, routing, and caching service worker complexities.
 
 ### Final Exam Review
+1. Which Express middleware will match this fetch request?
+    ```js
+    const r = await fetch('/fav/ringo' {
+      method: 'DELETE'
+    }) ;
+    ```
+    - ```js
+        app.delete(/fav\/(.*)/, () => {})
+        ```
+    
+2. You can use fetch in front and backend code
+    - True
+3. Port 80 is reserved for which protocol?
+    - HTTP requests
+4. What component will the URL */burger' render?
+    ```jsx
+    <BrowserRouter>
+      <div className='app'>
+        <nav>
+          <NavLink to='/'>A</NavLink>
+          <NavLink to='/burger'>C</NavLink>
+        </nav>
+        <main>
+          < Routes>
+            <Route path='/' element={<A />} exact />
+            <Route path='/burger' element={<B />} />
+            <Route path='*' element={<C />} />
+          < Routes>
+        </main>
+      </div>
+    < BrowserRouter>
+    ```
+    - B
+    - If there were no "/burger" path, C would have been rendered
+      - \* matches anything
+5. Which is NOT a standard HTTP header?
+    - Cookie
+    - ***Language***
+    - Content-Type
+    - Host
+6. What is NOT a purpose of JSX?
+    - ***Combine HTML, CSS, and JS***
+    - Render HTML from JS
+    - Componentize HTML
+    - Allow for composability of HTML
+7. Which of the following is NOT true of a Linux Daemon?
+    - ***Cannot fork other processes***
+    - PM2 is an example of a daemon
+    - Executes independent of a user
+    - Starts when the computer is rebooted
+      - Primary use of daemons is to fork other process
+8. What does the command `npm install ws` NOT do
+    - Locks the version of the websocket package for your application
+    - Adds the websocket source code to the node_modules directory
+    - Adds a dependency to your package json file
+    - ***Adds template code for websockets to your JavaScript***
+9. For the request [GET] /fav/george what is logged?
+    ```js
+    app.use(function (req, res, next) {
+      console.log('paul');
+      next();
+    });
+
+    app.put('/fav/:person', (req, res, next) => {
+      console.log('ringo');
+      next();
+    });
+
+    app get('/fav/:person', (req, res, next) => {
+      console.log(req.params.person); 
+      next();
+    });
+
+    app.get('/*', (req, res, next) => {
+      console.log('john');
+      next();
+    });
+    
+    app.use((_req, res) => res.send());
+    ```
+    - paul ringo george john
+    - paul john
+    - ***paul george john***
+    - paul ringo john
+10. Given the following code what will console.log print?
+    ```js
+    // Executed on server:
+    const { WebSocketServer } = require ('ws');
+    const wss = new WebSocketServer({ port: 9900 });
+    wss.on('connection', (ws) => {
+      ws.on('message', (data) => {
+        const msg = String.fromCharCode(...data);
+        ws.send(`Server:${msg}`);
+      });
+    });
+
+    // Executed on browser:
+    const socket = new WebSocket ('ws://localhost:9900');
+    socket.onmessage = (event) => { 
+      console.log(`Client: ${event.data}`);
+    }；
+    socket.send('Hello');
+    ```
+    - Hello:Client:Server
+    - Hello:Server:Client
+    - Server:Client:Hello
+    - ***Client:Server:Hello***
+11. What value does WebSocket add to HTTP?
+    - It removes the need to keep a connection open
+    - It runs using Token Ring
+    - It uses proof of work to demonstrate security
+    - ***It is peer to peer instead of client to server***
+12. Cookies allow:
+    - A client to store data on the server
+    - ***A server to store data on the client***
+    - For cache control
+    - A client or server to store data the server
+13. HTTP status codes in the 300 range are for?
+    - Success
+    - Server errors
+    - Client errors
+    - ***Content redirects or caching***
+14. Why is hashing stored passwords important?
+    - It makes it so a user can retrieve their password
+    - It validates how good the password is
+    - It improves performance
+    - It improves security by making the password unreadable
+15. What will component A initially display?
+    ```jsx
+    const B = () => <b>burger</b>;
+    const C = () => <b>fish</b>;
+    const D = () => <b>taco</b>; 
+    const A = () => {
+      const [v, updateV] = React.useState(false);
+      const [x, updateX] = React.useState(B);
+
+      let o = <C />;
+
+      if (v) {
+        o = <B />;
+      };
+
+      React.useEffect(() => updateX(D), [v]);
+
+      return (
+        <p onClick={() => updateV(true)}>{x}{o}</p>
+      );
+      };
+    ```
+    - burgerburger
+    - ***burgerfish*** 
+    - tacofish
+    - tacoburger
+16. What document matches this MongoDB query? `{$or: [{name:/J.*/}, {score: {$lt:3}}]}`
+    - { name: "bud", score:3 }
+    - { name: "harry", score:5 }
+    - ***{ name: "Walke", score: -55 }***
+    - { name: "john", score: 337 }
