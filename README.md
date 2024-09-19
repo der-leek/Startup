@@ -8,7 +8,10 @@ Whisper.txt allows you to focus on what is most important by accurately and effo
 Stop transcribing. Start whispering.
 
 ### Design
-![](Service/whisper_mock_UI.jpg)
+![](Service/screenshots/welcome.png)
+![](Service/screenshots/upload.png)
+![](Service/screenshots/transcribe.png)
+![](Service/screenshots/join.png)
 
 ### Key Features
 - Secure login over HTTPS
@@ -25,12 +28,12 @@ I will employ these required technologies as follows
   - Authentication
   - Receiving audio input
   - Sending text output
-- **DB/Login** - Stores users and credentials in database. 
+- **DB/Login** - Stores users and credentials in database.
 - **WebSocket** - Provides real-time transcription generation capability
 - **React** - Application will be ported to use the React web framework.
 
 ## HTML Deliverable
-- **HTML pages** - 4 HTML pages: 
+- **HTML pages** - 4 HTML pages:
   1. a welcome/login screen
   2. a page to upload audio files
   3. a page to display transcribed audio
@@ -85,7 +88,7 @@ With this deliverable, I modified my service so that transcription requests and 
 
 It doesn't work very quickly, because my server's not super powerful, but THE TRANSCRIPTION WORKS!!! I made sure to delete all user files as soon as the server is finished with them to preserve user privacy
 
-Also, I added an easter egg where a Chuck Norris joke (3rd party endpoint) animates on the screen if the output text is clicked. 
+Also, I added an easter egg where a Chuck Norris joke (3rd party endpoint) animates on the screen if the output text is clicked.
 
 This project has humbled and challenged me.
 
